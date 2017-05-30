@@ -8,17 +8,11 @@ import java.util.Random;
 import org.jgap.RandomGenerator;
 
 /**
- * A note consists of:
- *  pitch
- *  octave
- *  alteration
- *  duration
- * 
- *  pitch P for pause
- *  
- * 
+ * A note consists of: pitch (P for pause), octave, alteration and duration
  * 
  * @author Davide Nunes
+ * @author Hazel Que, Yanhan Lyu
+ * @version 30 May 2017
  */
 public class Note {
 
@@ -26,7 +20,7 @@ public class Note {
     public static final int MIN_OCTAVE = 0;
     public static final int MIN_DURATION = 1;
     public static final int MAX_DURATION = 32;
-    private int octave; //0 to 9 see above constants
+    private int octave; //0 to 8 see above constants
     private Pitch pitch; // note pitch
     private Alteration alteration; //simple pitch alteration
     private int duration; //1 2 4 8 16 32 .... starting at whole note
@@ -108,13 +102,18 @@ public class Note {
         return true;
     }
 
+    /**
+     * Compare how different two notes are
+     * @param other - the note to be compared against
+     * @return result - a value that indicates how different two notes are //TODO figure out the range in which result would lie in
+     */
     public double distance(Note other) {
         double result = 0.0;
         if (!this.pitch.equals(Pitch.R) && !other.pitch.equals(Pitch.R)) {
             double toneDistance = 0.0;
-            toneDistance = -1*((this.pitch.getValue() + alteration.getValue() ) - (other.pitch.getValue() + other.alteration.getValue()));
+            toneDistance = -1*((this.pitch.getValue() + alteration.getValue() )
+                    - (other.pitch.getValue() + other.alteration.getValue()));
             int octaveAbsDiff = Math.abs(this.octave - other.octave);
-
 
             if (this.octave == other.octave)//DISTANCE
             {

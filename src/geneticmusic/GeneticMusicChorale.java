@@ -41,6 +41,8 @@ import org.jgap.impl.WeightedRouletteSelector;
 /**
  *
  * @author daviden
+ * @author Hazel Que, Yanhan Lyu
+ * @version 30 May 2017
  */
 public class GeneticMusicChorale implements JMC {
 
@@ -49,26 +51,21 @@ public class GeneticMusicChorale implements JMC {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws InvalidConfigurationException, UnsupportedOperationException, UnsupportedRepresentationException {
+    public static void main(String[] args) throws InvalidConfigurationException,
+            UnsupportedOperationException, UnsupportedRepresentationException {
 
-
-
-
-
+        // change the input parameters here
         int populationSize = 40;
-        int chromossomeSize = 8;
+        int chromosomeSize = 8;
         int numGenerations = 500;
         String selector = "tournament";
         int tournamentk = 3;
         double tournamentp = 0.7;
 
-
-
-
-        //PARSE
+        // parse the arguments
         if (args.length > 0) {
             populationSize = Integer.parseInt(args[0]);
-            chromossomeSize = Integer.parseInt(args[1]);
+            chromosomeSize = Integer.parseInt(args[1]);
             numGenerations = Integer.parseInt(args[2]);
             selector = args[3];
 
@@ -78,13 +75,10 @@ public class GeneticMusicChorale implements JMC {
             }
         }
 
-
-
-
-
+        // print the input parameters to the terminal
         System.out.println("GA configuration:");
         System.out.println("population size: " + populationSize);
-        System.out.println("chromossome size: " + chromossomeSize);
+        System.out.println("chromosome size: " + chromosomeSize);
         System.out.println("number of generations: " + numGenerations);
         System.out.println("selection operator: " + selector);
         
@@ -93,18 +87,11 @@ public class GeneticMusicChorale implements JMC {
              System.out.println("tournament p: "+tournamentp);
         
         }
-        
-        
+
         //configuration object
         Configuration cfg = new DefaultConfiguration();
         ChoraleFitnessFunction fitnessF = new ChoraleFitnessFunction();
         cfg.setFitnessFunction(fitnessF);
-
-
-
-
-
-
 
         cfg.removeNaturalSelectors(true);
         // cfg.addNaturalSelector(new WeightedRouletteSelector(cfg), true); 
@@ -124,37 +111,28 @@ public class GeneticMusicChorale implements JMC {
 
         System.out.println("Crossover: " + cfg.getGeneticOperators().get(0).toString());
 
-        //set population size
+        // set population size
         cfg.setPopulationSize(populationSize);
 
-        //set note generator
+        // set note generator
         cfg.setRandomGenerator(new NoteGenerator());
 
 
 
 
-        //**************create a sample cromossome************************
+        //**************create a sample chromosome ************************
 
-        Gene[] sampleGenes = new Gene[chromossomeSize];
+        Gene[] sampleGenes = new Gene[chromosomeSize];
         for (int i = 0; i < sampleGenes.length; i++) {
             sampleGenes[i] = new ChoraleGene(cfg);
             System.out.println(sampleGenes[i].toString());
         }
 
-
-
-
         Chromosome sampleChromosome = new Chromosome(cfg, sampleGenes);
-
         cfg.setSampleChromosome(sampleChromosome);
-
 
         //construct a population genotype
         Genotype population = Genotype.randomInitialGenotype(cfg);
-
-
-
-
 
         //// evolve and evaluate
         double currentFitness = 0.0;
