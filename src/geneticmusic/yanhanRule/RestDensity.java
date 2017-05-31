@@ -19,7 +19,7 @@ public class NoteDensityRule implements CompositionRule{
      * @param density double value
      * @param referenceDuration Reference duration from JMUSIC Duration constants
      */
-    public RestDencityRule(double density, double referenceDuration){
+    public RestDensityRule(double density, double referenceDuration){
         this.density = density;
         this.referenceDuration = referenceDuration;
     }

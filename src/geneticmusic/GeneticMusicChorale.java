@@ -8,6 +8,7 @@ import geneticmusic.fitness.ChoraleFitnessFunction;
 import geneticmusic.genes.ChoraleGene;
 import geneticmusic.genes.NoteGenerator;
 import geneticmusic.jmusic.bridge.ConverterUtil;
+import geneticmusic.domain.*;
 import javax.swing.JFrame;
 import jm.JMC;
 import jm.util.Write;
@@ -57,7 +58,7 @@ public class GeneticMusicChorale implements JMC {
         // change the input parameters here
         int populationSize = 40;
         int chromosomeSize = 8;
-        int numGenerations = 500;
+        int numGenerations = 100;
         String selector = "tournament";
         int tournamentk = 3;
         double tournamentp = 0.7;
@@ -143,10 +144,8 @@ public class GeneticMusicChorale implements JMC {
         /***********************PRESENT DATA ON A CHART************************/
         XYSeries fitnessSeries = new XYSeries("Fittest Fitness");
 
-
         XYSeriesCollection dataset = new XYSeriesCollection(fitnessSeries);
         XYSeriesCollection rulesDataset = fitnessF.getRuleDataset();
-
 
         JFreeChart fitnessChart = ChartFactory.createXYLineChart("Average Fitness Evolution",
                 "Generation",
@@ -164,7 +163,6 @@ public class GeneticMusicChorale implements JMC {
                 true, //tooltips
                 false); //url
 
-
         //add chart to panel
         ChartPanel chartPanel = new ChartPanel(fitnessChart);
         JFrame chartFrame = new JFrame("Average Fitness");
@@ -172,7 +170,6 @@ public class GeneticMusicChorale implements JMC {
         chartFrame.setContentPane(chartPanel);
         chartFrame.pack();
         chartFrame.setVisible(true);
-
 
         //add chart to panel
         ChartPanel rulesPanel = new ChartPanel(rulesChart);
@@ -188,7 +185,7 @@ public class GeneticMusicChorale implements JMC {
             currentFitness = population.getFittestChromosome().getFitnessValue();
 
             fitnessSeries.add(i, getAVGFitness(population));//update series
-            //System.out.println("Current fitness: "+currentFitness);
+            System.out.println("Current fitness: "+currentFitness);
             i++;
 
             //System.out.println(i);

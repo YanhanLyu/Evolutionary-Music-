@@ -54,7 +54,7 @@ public class ChoraleFitnessFunction extends AbstractCompositionFitness {
         HCAvoidDissonances avoidDissonances = new HCAvoidDissonances(weight*2);
         VIParallelism parallelism = new VIParallelism(weight*1);
         HCDuplicateFundamental duplicateFundamental = new HCDuplicateFundamental(weight*2, tonic, Scales.MAJOR_SCALE);
-        
+
         addRule(verticalExtension);//add rule to rule set
         addRule(verticalIntervalRelation);
         addRule(inScale);

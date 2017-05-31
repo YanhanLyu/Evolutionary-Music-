@@ -1,7 +1,7 @@
 /*
  * Written by Yanhan
  */
-package geneticmusic.rulesInConstruction;
+package geneticmusic.yanhanRule;
 
 import geneticmusic.fitness.CompositionRule;
 import geneticmusic.jmusic.bridge.ConverterUtil;
@@ -34,5 +34,8 @@ public class NoteDensityRule implements CompositionRule{
         } catch(Exception e){}
         return result;
     }
-    
+
+    public String getName() {
+        return "Note Density Rule";
+    }
 }

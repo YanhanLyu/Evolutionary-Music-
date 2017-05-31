@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package geneticmusic.rulesInConstruction;
+package geneticmusic.yanhanRule;
 
 import geneticmusic.fitness.CompositionRule;
 import geneticmusic.domain.Note;
@@ -33,5 +33,8 @@ public class PausesAfterShortNotes implements CompositionRule{
          
          return result;
     }
-    
+
+    public String getName() {
+        return "Pause After Short Notes Rule";
+    }
 }
