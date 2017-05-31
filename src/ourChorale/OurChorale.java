@@ -8,7 +8,7 @@ public class OurChorale{
 		int populationSize = 2;
         int chromosomeSize = 20;
         int numGenerations = 100;
-        int mutationRate = 0.1;
+        double mutationRate = 0.1;
         String selector = "tournament";
         int tournamentk = 3;
         double tournamentp = 0.7;
@@ -19,11 +19,11 @@ public class OurChorale{
             chromosomeSize = Integer.parseInt(args[1]);
             numGenerations = Integer.parseInt(args[2]);
             selector = args[3];
-            mutationRate = args[4];
+            mutationRate = Integer.parseInt(args[4]);
 
-            if (args.length > 4) {
-                tournamentk = Integer.parseInt(args[4]);
-                tournamentp = Double.parseDouble(args[5]);
+            if (args.length > 5) {
+                tournamentk = Integer.parseInt(args[5]);
+                tournamentp = Double.parseDouble(args[6]);
             }
         }
         System.out.println("GA configuration:");
@@ -65,13 +65,13 @@ public class OurChorale{
 	 	// calculate fitness!!
 
 	 	// I'm right, I'm so clever.
-	 	double random1 = Math.random();//0-1, decide if do the mutation
-	 	// check if we need to do mutation on each individual
-	 	for (int i = 0; i < populationSize; i ++){
-	 		if (mutationRate < random){
-	 			// Hazel here!!!!!!!! love you
-	 		}
-	 	}
+	 	// double random1 = Math.random();//0-1, decide if do the mutation
+	 	// // check if we need to do mutation on each individual
+	 	// for (int i = 0; i < populationSize; i ++){
+	 	// 	if (mutationRate < random){
+	 	// 		// Hazel here!!!!!!!! love you
+	 	// 	}
+	 	// }
 
 
 
@@ -80,7 +80,7 @@ public class OurChorale{
 	// most difficult part, hope I can fix it.
 	public double calculateFitness(ChoraleGene[] gene){
 		
-
+		return 1;
 	}
 
 	 
