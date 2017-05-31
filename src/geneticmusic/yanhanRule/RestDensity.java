@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Written by Yanhan
  */
 package geneticmusic.rulesInConstruction;
 
@@ -10,10 +9,6 @@ import jm.music.data.Phrase;
 import jm.music.tools.PhraseAnalysis;
 import org.jgap.IChromosome;
 
-/**
- *
- * @author davide
- */
 public class NoteDensityRule implements CompositionRule{
     double density;
     double referenceDuration;
@@ -24,7 +19,7 @@ public class NoteDensityRule implements CompositionRule{
      * @param density double value
      * @param referenceDuration Reference duration from JMUSIC Duration constants
      */
-    public NoteDensityRule(double density, double referenceDuration){
+    public RestDencityRule(double density, double referenceDuration){
         this.density = density;
         this.referenceDuration = referenceDuration;
     }
@@ -34,11 +29,9 @@ public class NoteDensityRule implements CompositionRule{
         double result = 0.0;
        Phrase chromosome = ConverterUtil.convert(ic);
         try {
-            double currentDensity = PhraseAnalysis.noteDensity(chromosome, referenceDuration);
+            double currentDensity = PhraseAnalysis.restDensity(chromosome, referenceDuration);
             if(currentDensity > density)
                 result += currentDensity;
-                
-            
         } catch(Exception e){}
         return result;
     }

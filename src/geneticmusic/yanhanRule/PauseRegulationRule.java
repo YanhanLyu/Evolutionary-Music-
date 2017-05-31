@@ -14,7 +14,7 @@ import org.jgap.IChromosome;
 
 /**
  *
- * @author davide
+ * @author davide, Yanhan Lyu
  */
 public class PauseRegulationRule implements CompositionRule{
 
@@ -24,7 +24,12 @@ public class PauseRegulationRule implements CompositionRule{
         
         for(Gene current: ic.getGenes()){
             Note currentNote = (Note) current.getAllele();
-            restCount = currentNote.getPitch().equals(Pitch.R) ? 1 : 0;
+            // pitch.R is for pauses
+            if (currentNote.getPitch().equals(Pitch.R)){
+            	return 1;
+            } else {
+            	return 0;
+            }
         } 
         
         return -restCount;
