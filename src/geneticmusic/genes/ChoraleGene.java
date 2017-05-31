@@ -15,45 +15,44 @@ import org.jgap.UnsupportedRepresentationException;
 
 /**
  * Each chorale gene represents a quarter note in terms of rhythm
- * Each gene represents a part set of notes for the current tempo in the measure
+ * Each chorale gene represents a set of notes for the current tempo in the measure
  * 
- * the notes can be quarter 4 or semi-quarter 8, so each gene can have 2 notes maximum
- * 
- * //NOTE for simplicity reasons the notes are all quarter for now
- * 
+ * The notes can be quarter (4) or semi-quarter (8), so each gene can have 2 notes maximum
+ * For simplicity reasons the notes are all quarter for now
+ *
  * @author Davide Nunes
  * @author Hazel Que, Yanhan Lyu
  * @version 30 May 2017
  */
 public class ChoraleGene extends BaseGene implements Gene, Serializable{
 
-    private Note  soprano;
-    private Note  alto;
-    private Note  tenor;
-    private Note  bass;
+    private Note soprano;
+    private Note alto;
+    private Note tenor;
+    private Note bass;
 
-    //constructor, creates a random note randomizer over all the parameters
+    /**
+     * Constructor that creates a random Note
+     * @param conf - current configuration
+     * @throws InvalidConfigurationException
+     */
     public ChoraleGene(Configuration conf) throws InvalidConfigurationException{
-      
-        
         this(conf, 
                 NoteGenerator.getRandomNote(4, 5, 4, 4), 
                 NoteGenerator.getRandomNote(3, 5, 4, 4), 
                 NoteGenerator.getRandomNote(3, 4, 4, 4), 
                 NoteGenerator.getRandomNote(2, 4, 4, 4));  
     }
-    
-    
+
     /**
-     * Setup a new note withe the given values
-     *  conf - Configuration - default configuration object
-     *  pitch - Note - note pitch must be one from the enumerate Note
-     *  octave - Integer - the octave in which the note is set mid = 0
-     *  alt - Alteration - alterations on the note (SHARP or FLAT), can be
-     *              null if you want to represent a natural note(without alterations)
-     *  duration  Integer - the duration of the note, starting at 1
-     * 
-     * @throws InvalidConfigurationException 
+     * Set up a new Note within the given values
+     *
+     * @param conf - default configuration object
+     * @param soprano - soprano Note
+     * @param alto - alto Note
+     * @param tenor - tenor Note
+     * @param bass - bass Note
+     * @throws InvalidConfigurationException
      */
     public ChoraleGene(Configuration conf, Note soprano, 
                                            Note alto,
@@ -65,19 +64,16 @@ public class ChoraleGene extends BaseGene implements Gene, Serializable{
         this.tenor = tenor;
         this.bass = bass;
     }
-    
-    
 
     @Override
     protected Object getInternalValue() {
         return new Note[] {soprano, alto, tenor, bass};
     }
 
-    
-     /**
-     * Provides an implementation-independent means for creating new Gene
-     * instances
-    */
+    /**
+     * Provides an implementation-independent means for creating new Gene instances
+     * @return - new ChoraleGene
+     */
     @Override
     protected Gene newGeneInternal() {
         try {
@@ -88,9 +84,6 @@ public class ChoraleGene extends BaseGene implements Gene, Serializable{
       } catch (InvalidConfigurationException ex) {
             throw new IllegalStateException(ex.getMessage());
       }
-        
-        
-        
     }
 
     @Override
@@ -100,10 +93,8 @@ public class ChoraleGene extends BaseGene implements Gene, Serializable{
         this.alto = notes[1];
         this.tenor = notes[2];
         this.bass = notes[3];
-        
     }
 
-    
     //for persistence in XML 
     @Override
     public String getPersistentRepresentation() throws UnsupportedOperationException {
@@ -125,6 +116,10 @@ public class ChoraleGene extends BaseGene implements Gene, Serializable{
       //TODO implements this if needed
     }
 
+    /**
+     * set a chosen note to have random values
+     * @param rg - a random generator
+     */
     @Override
     public void setToRandomValue(RandomGenerator rg) {
         if(!(rg instanceof NoteGenerator))
@@ -132,8 +127,8 @@ public class ChoraleGene extends BaseGene implements Gene, Serializable{
     
         NoteGenerator generator = (NoteGenerator) rg;
         
-        int noteChoosen = generator.nextInt(4);
-        switch(noteChoosen){
+        int noteChosen = generator.nextInt(4);
+        switch(noteChosen){
             case 0: this.soprano = generator.nextNote(4, 5, 4, 4); 
                 break;
             case 1:  this.alto = generator.nextNote(3, 5, 4, 4); 
@@ -143,14 +138,6 @@ public class ChoraleGene extends BaseGene implements Gene, Serializable{
             case 3:  this.bass = generator.nextNote(2, 4, 4, 4);  
                 break;
         }
-        
-        
-       
-        
-       
-        
-        
-        
     }
 
     @Override
@@ -161,11 +148,7 @@ public class ChoraleGene extends BaseGene implements Gene, Serializable{
     @Override
     public int compareTo(Object t) {
         ChoraleGene other = (ChoraleGene) t;
-        
         Note[] otherNotes = (Note[]) other.getAllele();
-        
-        
         return (int) soprano.distance(otherNotes[0]);
     }
-    
 }

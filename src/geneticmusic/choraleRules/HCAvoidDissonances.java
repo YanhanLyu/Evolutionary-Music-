@@ -12,8 +12,13 @@ import org.jgap.Gene;
 import org.jgap.IChromosome;
 
 /**
+ * Avoid Dissonance Rule -
+ * If the distance between Soprano and Alto, Alto and Tenor, and Tenor and Bass is not Minor Second, Major Seven or
+ * Augmented Forth, fitness score increases
  *
  * @author davide
+ * @author Hazel Que, Yanhan Lyu
+ * @version 30 May 2017
  */
 public class HCAvoidDissonances extends AbstractCompositionRule{
     
@@ -33,8 +38,6 @@ public class HCAvoidDissonances extends AbstractCompositionRule{
         for(int i = 0; i< genes.length; i++){
             Note[] currentChord = (Note[]) genes[i].getAllele();
             
-            
-            
             double distanceSA = Math.abs(currentChord[0].distance(currentChord[1]));
             double distanceAT = Math.abs(currentChord[1].distance(currentChord[2]));
             double distanceTB = Math.abs(currentChord[2].distance(currentChord[3]));
@@ -53,11 +56,7 @@ public class HCAvoidDissonances extends AbstractCompositionRule{
                distanceTB != MAJOR_SEVEN &&
                distanceTB != AUGMENTED_FORTH)
                     result+= 1/(genes.length*3.0);
-        
         }
-        
-        
-        
         return result;
     }
 
@@ -65,5 +64,4 @@ public class HCAvoidDissonances extends AbstractCompositionRule{
     public String getName() {
         return "Avoid Dissonances Rule";
     }
-    
 }

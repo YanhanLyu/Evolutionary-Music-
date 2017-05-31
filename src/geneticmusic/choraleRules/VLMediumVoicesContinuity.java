@@ -10,7 +10,7 @@ import org.jgap.Gene;
 import org.jgap.IChromosome;
 
 /**
- * Voice Logic Rule
+ * Voice Logic Rule -
  * 
  * melody must be concistence
  * 

@@ -10,11 +10,10 @@ import org.jgap.Gene;
 import org.jgap.IChromosome;
 
 /**
- * Voice Logic Rule
+ * Voice Logic Rule -
  * 
- * melody must be concistence
- * 
- * 
+ * Compare the distance between every two adjacent Notes, fitness score increases if the distance is reasonably small
+ *
  * @author Davide Nunes
  */
 public class VLMelodyContinuity extends AbstractCompositionRule {
@@ -37,13 +36,10 @@ public class VLMelodyContinuity extends AbstractCompositionRule {
             distance = Math.abs(distance);
 
             if (distance < 2 && distance >= 0) {
-                result += 1 / ((genes.length - 1) * 1.0); //proporcional to the number of intervals
+                result += 1 / ((genes.length - 1) * 1.0); //proportional to the number of intervals
             }
-
         }
         return result;
-
-
     }
 
     @Override

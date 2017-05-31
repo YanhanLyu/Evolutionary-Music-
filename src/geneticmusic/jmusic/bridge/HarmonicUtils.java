@@ -7,10 +7,20 @@ package geneticmusic.jmusic.bridge;
 import geneticmusic.domain.Note;
 
 /**
+ * A utility class for the harmonies
  *
  * @author davide
+ * @author Hazel Que, Yanhan Lyu
+ * @version 30 May 2017
  */
 public class HarmonicUtils {
+
+    /**
+     *
+     * @param notes
+     * @param chord
+     * @return
+     */
     public static boolean isFundamentalDuplicated(Note[] notes, int[] chord){
         boolean duplicated = false;
         int count = 0;
@@ -18,19 +28,20 @@ public class HarmonicUtils {
             int normPitch = ConverterUtil.getNormalizedPitch(note);
             if(normPitch == chord[0])
                 count++;
-            
-        
         }
         if(count == 2)
             duplicated = true;
-        
-        
-        
         return duplicated;
-    
-    
     }
-    
+
+    /**
+     * Find all the possible chords given a tonic Note and a scale. If a chord is a valid one with reference to
+     * the list of Notes, return the chord. Otherwise return null.
+     * @param notes - a list of Notes
+     * @param tonic - a tonic Note
+     * @param scale - a scale
+     * @return - either a chord that fits the Notes, or null.
+     */
     public static int[] findChord(Note[] notes, int tonic, int[] scale){
         int[][] possibleChords = possibleChords(tonic, scale);
         for(int[] chord : possibleChords){
@@ -46,12 +57,9 @@ public class HarmonicUtils {
         for(int i = 0; i< scale.length; i++){
             for(int j = 0; j<3; j++){
                 chords[i][j] = ConverterUtil.getNormalizedPitch(
-                                        tonic + scale[(i+j*2) % scale.length]
-                        );
+                                        tonic + scale[(i+j*2) % scale.length]);
             }
         }
-        
-        
         return chords;
     }
     
@@ -60,7 +68,6 @@ public class HarmonicUtils {
         for(int n : chord)
             if(ConverterUtil.getNormalizedPitch(note) == n)
                 return true;
-        
         return false;
     }
     

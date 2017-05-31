@@ -11,7 +11,10 @@ import org.jgap.IChromosome;
 
 /**
  * Voices must not cross each other
+ *
  * @author davide
+ * @author Hazel Que, Yanhan Lyu
+ * @version 30 May 2017
  */
 public class VIVoiceCross extends AbstractCompositionRule{
     
@@ -22,24 +25,18 @@ public class VIVoiceCross extends AbstractCompositionRule{
     @Override
     protected double evaluation(IChromosome ic) {
         double result = 0.0;
-        
         Gene[] genes = ic.getGenes();
         
         for(int i = 0; i< genes.length; i++){
             Note[] currentChord = (Note[]) genes[i].getAllele();
             
-            if(currentChord[1].distance(currentChord[0]) > 0)//not crossed
+            if(currentChord[1].distance(currentChord[0]) > 0) //not crossed
                 result+= 1/(genes.length*3.0);
             if(currentChord[2].distance(currentChord[1]) > 0)
                 result+= 1/(genes.length*3.0);
             if(currentChord[3].distance(currentChord[2]) > 0)
                 result+= 1/(genes.length*3.0);
-            
-        
         }
-            
-        
-        
         return result;
     }
 
@@ -47,5 +44,4 @@ public class VIVoiceCross extends AbstractCompositionRule{
     public String getName() {
         return "No Voice Cross Rule";
     }
-    
 }

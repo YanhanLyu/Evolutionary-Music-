@@ -69,9 +69,6 @@ public class NoteGene extends BaseGene implements Gene, Serializable{
       } catch (InvalidConfigurationException ex) {
             throw new IllegalStateException(ex.getMessage());
       }
-        
-        
-        
     }
 
     @Override
@@ -129,8 +126,7 @@ public class NoteGene extends BaseGene implements Gene, Serializable{
         
             newNote = generator.nextNote();
        //}while(newNote.distance(this.note) < 2);
-        
-        
+
         this.note = newNote;
     }
 
@@ -142,8 +138,6 @@ public class NoteGene extends BaseGene implements Gene, Serializable{
     @Override
     public int compareTo(Object t) {
         NoteGene other = (NoteGene) t;
-        
         return (int) this.note.distance((Note) other.getAllele());
     }
-    
 }

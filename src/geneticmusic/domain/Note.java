@@ -110,13 +110,15 @@ public class Note {
 
     public double distance(Note other) {
         double result = 0.0;
+        // if both Notes are real notes (instead of pauses)
         if (!this.pitch.equals(Pitch.R) && !other.pitch.equals(Pitch.R)) {
             double toneDistance = 0.0;
-            toneDistance = -1*((this.pitch.getValue() + alteration.getValue() ) - (other.pitch.getValue() + other.alteration.getValue()));
+            toneDistance = -1*((this.pitch.getValue() + alteration.getValue() ) -
+                    (other.pitch.getValue() + other.alteration.getValue()));
             int octaveAbsDiff = Math.abs(this.octave - other.octave);
 
-
-            if (this.octave == other.octave)//DISTANCE
+            // if the two octaves are the same
+            if (this.octave == other.octave) //DISTANCE
             {
                 result = toneDistance;
             } else if (this.octave > other.octave) {

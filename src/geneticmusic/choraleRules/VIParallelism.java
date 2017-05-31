@@ -10,13 +10,15 @@ import org.jgap.Gene;
 import org.jgap.IChromosome;
 
 /**
- * Voice Independence Rule
- * 
- * parallelism of 8 , 5  or unisson is forbiden 
- * between se same pair of voices
- * 
+ * Voice Independence Rule -
+ *
+ * Calculate the distances between the same pair of voices in the current chord and the next chord,
+ * if the distances are not octave or fifth at the same time, then parallelism is not found.
+ * Fitness score increases.
  * 
  * @author davide
+ * @author Hazel Que, Yanhan Lyu
+ * @version 30 May 2017
  */
 public class VIParallelism extends AbstractCompositionRule{
     private static final double OCTAVE = 6;
@@ -33,8 +35,8 @@ public class VIParallelism extends AbstractCompositionRule{
         Gene[] genes = ic.getGenes();
         
         for(int i = 0; i<genes.length-1; i++){
-             Note[] currentChord = (Note[]) genes[i].getAllele(); //get the current chord
-             Note[] nextChord = (Note[]) genes[i+1].getAllele(); //get the next chord
+             Note[] currentChord = (Note[]) genes[i].getAllele(); // get the current chord
+             Note[] nextChord = (Note[]) genes[i+1].getAllele(); // get the next chord
              boolean parallelismFound = false;
              
              for(int k = 0; k <= 3; k++){
@@ -45,17 +47,13 @@ public class VIParallelism extends AbstractCompositionRule{
                              double distanceNext = Math.abs(nextChord[k].distance(nextChord[j]));
                              if(distanceNext == distance)
                                  parallelismFound = true;
-                         
                          }
-                     
                      }
                  }
              }
              if(!parallelismFound)
                  result+= 1/(genes.length-1);
         }
-        
-        
         return result;
     }
 
@@ -63,5 +61,4 @@ public class VIParallelism extends AbstractCompositionRule{
     public String getName() {
         return "No Parallelism Rule";
     }
-    
 }

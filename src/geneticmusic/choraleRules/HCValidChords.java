@@ -12,11 +12,12 @@ import org.jgap.Gene;
 import org.jgap.IChromosome;
 
 /**
- * Harmonic consistency rule
- * 
- * gives a bonus to correclty constructed chords
+ * Harmonic Consistency Rule -
+ * Gives a bonus to correctly constructed chords
  * 
  * @author davide nunes
+ * @author Hazel Que, Yanhan Lyu
+ * @version 30 May 2017
  */
 public class HCValidChords extends AbstractCompositionRule{
     private int[] scale;
@@ -27,8 +28,7 @@ public class HCValidChords extends AbstractCompositionRule{
         this.scale = scale;
         this.tonic = ConverterUtil.getPitch(tonic);
     }
-    
-    
+
     @Override
     protected double evaluation(IChromosome ic) {
         double result = 0.0;
@@ -39,8 +39,6 @@ public class HCValidChords extends AbstractCompositionRule{
             if(HarmonicUtils.isValidChord(currentChord, scale, tonic))
                 result+= 1/(genes.length*1.0);
         }
-            
-        
         return result;
     }
 
@@ -48,5 +46,4 @@ public class HCValidChords extends AbstractCompositionRule{
     public String getName() {
        return "Valid chords rule";
     }
-    
 }

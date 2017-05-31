@@ -22,8 +22,11 @@ import org.jgap.FitnessFunction;
 import org.jgap.IChromosome;
 
 /**
+ * The fitness function for evolutionary music
  *
  * @author davide
+ * @author Hazel Que, Yanhan Lyu
+ * @version 30 May 2017
  */
 public class ChoraleFitnessFunction extends AbstractCompositionFitness {
 
@@ -31,10 +34,14 @@ public class ChoraleFitnessFunction extends AbstractCompositionFitness {
        super();
    }
 
+    /**
+     * set of rules (associated with weights) to be used for the program
+     */
     @Override
     protected void configRules() {
         double weight = 1/10.0;
-        
+
+        // set the first note of a particular scale as a reference point for some of the fitness rules
         Note tonic = new Note(Pitch.C, 5, Alteration.N, 4);
         
         VEVoiceExtension verticalExtension = new VEVoiceExtension(weight);

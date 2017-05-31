@@ -10,30 +10,38 @@ import org.jgap.Gene;
 import org.jgap.IChromosome;
 
 /**
+ * Vertical Equilibrium Voice Interval Relationsion Rule -
+ * Checks the interval between Notes with different voices, for every interval that falls within range,
+ * fitness score increases
  *
  * @author davide
+ * @author Hazel Que, Yanhan Lyu
+ * @version 30 May 2017
  */
 public class VEVoiceIntervalRelation extends AbstractCompositionRule{
+
     private static final int SOPRANO = 0;
     private static final int ALTO = 1;
     private static final int TENOR = 2;
     private static final int BASS = 3;
     
-    
     public VEVoiceIntervalRelation(double weight){
         super(weight);
     }
-    
-    
+
+    /**
+     * fitness evaluation for Voice Interval Relation rule
+     *
+     * @param ic - current chromosome
+     * @return - fitness score for VEInterval Rule
+     */
     @Override
     protected double evaluation(IChromosome ic) {
         double result = 0.0;
 
-
-        //for each note within range, the note gets a score
+        // for each note within range, the note gets a score
         Gene[] genes = ic.getGenes();
         double totalChords = genes.length;
-
 
         for (int i = 0; i < genes.length; i++) {
             Note[] currentNotes = (Note[]) genes[i].getAllele(); //get the current chord
@@ -43,21 +51,18 @@ public class VEVoiceIntervalRelation extends AbstractCompositionRule{
                  result += 1 / (totalChords * 3.0);
             if(withinRange(TENOR, BASS, currentNotes[2],currentNotes[3]))
                  result += 1 / (totalChords * 3.0);
-        
         }
-        
-        
-        
         return result;
     }
-    
+
     /**
-     * Interval between S A / A T <= 8
-     * Interval between T B <= 12
-     * 
-     * @param position
-     * @param note
-     * @return 
+     * If the two Notes are Bass and Tenor, the interval needs to be <= 12
+     * Otherwise, the interval needs to be <= 8
+     * @param note1 - voice of the first Note
+     * @param note2 - voice of the second Note
+     * @param firstNote - first Note
+     * @param secondNote - second Note
+     * @return - a boolean value indicating whether the two Notes are within range
      */
      private static boolean withinRange(int note1, int note2, Note firstNote, Note secondNote) {
          boolean result = false;
@@ -73,5 +78,4 @@ public class VEVoiceIntervalRelation extends AbstractCompositionRule{
     public String getName() {
         return "Voice Vertical Interval Rule";
     }
-    
 }
