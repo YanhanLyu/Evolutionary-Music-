@@ -16,17 +16,14 @@ import org.jgap.RandomGenerator;
 import org.jgap.UnsupportedRepresentationException;
 
 /**
- * Class that represents a musical note as a gene
- * to build a melody chromosome 
- * 
- * 
+ * NoteGene class represents a Note as a gene. These Notes wrapped as genes then build the melody chromosomes.
+ *
  * @author Davide Nunes
+ * @author Hazel Que, Yanhan Lyu
+ * @version 30 May 2017
  */
 public class NoteGene extends BaseGene implements Gene, Serializable{
     private Note note;
-  
-    
-    
         
     //constructor, creates a random note randomizer over all the parameters
     public NoteGene(Configuration conf) throws InvalidConfigurationException{

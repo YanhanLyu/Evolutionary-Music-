@@ -14,27 +14,24 @@ import org.jgap.RandomGenerator;
 import org.jgap.UnsupportedRepresentationException;
 
 /**
- * Each chorale gene represents a quarcher note in terms of rithm
- * each gene represents a part set of notes for the current tempo in the measure
+ * Each chorale gene represents a quarter note in terms of rhythm
+ * Each gene represents a part set of notes for the current tempo in the measure
  * 
- * the notes can be quarcher 4 or 
- * semiquarcher 8, so each gene can have 2 notes maximum 
+ * the notes can be quarter 4 or semi-quarter 8, so each gene can have 2 notes maximum
  * 
- * //NOTE for simplicity reasons the notes are all quarchers for now
+ * //NOTE for simplicity reasons the notes are all quarter for now
  * 
  * @author Davide Nunes
+ * @author Hazel Que, Yanhan Lyu
+ * @version 30 May 2017
  */
 public class ChoraleGene extends BaseGene implements Gene, Serializable{
-  
-    
+
     private Note  soprano;
     private Note  alto;
     private Note  tenor;
     private Note  bass;
-  
-    
-    
-        
+
     //constructor, creates a random note randomizer over all the parameters
     public ChoraleGene(Configuration conf) throws InvalidConfigurationException{
       

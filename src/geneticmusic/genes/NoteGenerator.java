@@ -11,13 +11,18 @@ import java.util.Random;
 import org.jgap.RandomGenerator;
 
 /**
+ * A utility class that generates random notes
  *
  * @author davide nunes
+ * @author Hazel Que, Yanhan Lyu
+ * @version 30 May 2017
  */
 public class NoteGenerator implements RandomGenerator{
-     private static Random randomGenerator;
-     
-     
+    private static Random randomGenerator;
+
+    /**
+     * @return a new random Note
+     */
     public Note nextNote(){
         return new Note(
                 getRandomPitch(), 
@@ -25,33 +30,37 @@ public class NoteGenerator implements RandomGenerator{
                 getRandomAlteration(),
                 getRandomDuration(4,16));
     }
-    
+
+    /**
+     * @param minOctave
+     * @param maxOctave
+     * @param minRithm
+     * @param maxRithm
+     * @return a random Note generated within the allowed octave and rhythm ranges
+     */
     public Note nextNote(int minOctave, int maxOctave, int minRithm, int maxRithm){
          return getRandomNote(minOctave, maxOctave, minRithm, maxRithm);
-    
-    
     }
-    
+
+    /**
+     * A utility method for nextNode
+     *
+     * @param minOctave
+     * @param maxOctave
+     * @param minRithm
+     * @param maxRithm
+     * @return a random Note generated within the given octave and rhythm ranges
+     */
     public static Note getRandomNote(int minOctave, int maxOctave, int minRithm, int maxRithm){
          return new Note(
                 getRandomPitch(), 
                 getRandomOctave(minOctave,maxOctave), 
                 getRandomAlteration(),
                 getRandomDuration(minRithm,maxRithm));
-    
-    
     }
-    
-    
-    
-    
+
     /**
-     * Get a random note from the available pitches
-     * or a pause
-     * 
-     * TODO REENABLE THE RESTS
-     * 
-     * @return note Note a random note 
+     * @return a random Note from the available pitch, or a pause.
      */
     public static Pitch getRandomPitch(){   
          Pitch[] possibleNotes = Pitch.values();
@@ -77,16 +86,15 @@ public class NoteGenerator implements RandomGenerator{
            
         return possibleAlterations[index];
     }
-    
+
     /**
-     * return a randomOctave
-     * 
-     */ 
+     * @param minOctave
+     * @param maxOctave
+     * @return a random octave between minOctave and maxOctave
+     */
     public static int getRandomOctave(int minOctave, int maxOctave){
-        if(minOctave < Note.MIN_OCTAVE || maxOctave > Note.MAX_OCTAVE)
-            //do nothing for now
-        
-        
+        if(minOctave < Note.MIN_OCTAVE || maxOctave > Note.MAX_OCTAVE) //TODO some kind of warning
+
         randomGenerator = new Random();
         int [] octaves = new int[maxOctave-minOctave + 1];
         
@@ -96,23 +104,18 @@ public class NoteGenerator implements RandomGenerator{
         }
         
         int selected = 0;
-      
-        
-            selected = randomGenerator.nextInt(octaves.length);
-        
-       
+        selected = randomGenerator.nextInt(octaves.length);
+
         return octaves[selected];     
     }
-    
+
     /**
-     * Regenerates durations between min and max
-     * 
-     */ 
-    public static int getRandomDuration(int min, int max){//TODO add augmentation points later
-        if(min % 2 != 0 || max % 2 != 0 || min < 1 || max > 32)
-           //do nothing for now
-            
-        
+     * @param min minimum duration
+     * @param max maximum duration
+     * @return a random duration between min and max
+     */
+    public static int getRandomDuration(int min, int max){ //TODO add augmentation points later
+        if(min % 2 != 0 || max % 2 != 0 || min < 1 || max > 32) // TODO some kind of warning
         
         randomGenerator = new Random();
         
@@ -124,19 +127,10 @@ public class NoteGenerator implements RandomGenerator{
             durations[index++] = i;
         }
         
-        
         int selected = randomGenerator.nextInt(durations.length);
-        
-        randomGenerator = new Random(); 
-        
-        
-        
-        
+        randomGenerator = new Random();
         return durations[selected];     
     }
-    
-    
-    
 
     @Override
     public int nextInt() {
@@ -167,9 +161,13 @@ public class NoteGenerator implements RandomGenerator{
     public boolean nextBoolean() {
         return randomGenerator.nextBoolean();
     }
-    
-    
-    //util log2
+
+
+    /**
+     * A utility class to calculate log2 of a number
+     * @param n
+     * @return log2n
+     */
     private static double log2(double n){
         return Math.log(n)/Math.log(2);
     }
