@@ -52,15 +52,19 @@ public class OurChorale{
 	 	// test if I'm right
 	 	for (int i = 0; i<populationSize; i++){
 	 		ChoraleGene[] printGene = population[i].getGene();
+	 		System.out.println(OurChorale.calculateFitness(population[i]));
 	 		for (int j = 0; j < chromosomeSize; j++) {
-	 			System.out.println("round: "+j);
-	 			System.out.println("bass"+printGene[j].getBass().getPitch());
-	 			System.out.println("alto"+printGene[j].getAlto().getPitch());
-	 			System.out.println("soprano"+printGene[j].getSoprano().getPitch());
-	 			System.out.println("tenor"+printGene[j].getTenor().getPitch()+"\n");
+	 			//System.out.println("round: "+j);
+	 			// System.out.println("bass"+printGene[j].getBass().getPitch());
+	 			// System.out.println("alto"+printGene[j].getAlto().getPitch());
+	 			// System.out.println("soprano"+printGene[j].getSoprano().getPitch());
+	 			// System.out.println("tenor"+printGene[j].getTenor().getPitch()+"\n");
+	 			
 
         	}
 	 	}
+
+
 
 	 	// calculate fitness!!
 
@@ -75,12 +79,14 @@ public class OurChorale{
 
 
 
+
+
 	}
 
 	// most difficult part, hope I can fix it.
-	public double calculateFitness(ChoraleGene[] gene){
-		
-		return 1;
+	public static double calculateFitness(Melody melody){
+		VLMediumVoicesContinuity mvc = new VLMediumVoicesContinuity(0.2);
+		return mvc.evaluation(melody.getGene());
 	}
 
 	 
