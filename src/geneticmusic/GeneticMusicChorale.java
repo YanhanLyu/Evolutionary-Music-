@@ -5,10 +5,8 @@
 package geneticmusic;
 
 import geneticmusic.fitness.ChoraleFitnessFunction;
-import geneticmusic.genes.ChoraleGene;
-import geneticmusic.genes.NoteGenerator;
+import geneticmusic.genes.*;
 import geneticmusic.jmusic.bridge.ConverterUtil;
-import geneticmusic.domain.*;
 import javax.swing.JFrame;
 import jm.JMC;
 import jm.util.Write;
