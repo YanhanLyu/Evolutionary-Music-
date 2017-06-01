@@ -57,7 +57,7 @@ public class GeneticMusicChorale implements JMC {
 
         // change the input parameters here
         int populationSize = 40;
-        int chromosomeSize = 8;
+        int chromosomeSize = 16;
         int numGenerations = 100;
         String selector = "tournament";
         int tournamentk = 3;
@@ -104,12 +104,8 @@ public class GeneticMusicChorale implements JMC {
             cfg.addNaturalSelector(new BestChromosomesSelector(cfg, 0.7), true);
         }
 
-
-
         cfg.setKeepPopulationSizeConstant(true);
         System.out.println("Selection Operator: " + cfg.getNaturalSelector(true, 0));
-
-
         System.out.println("Crossover: " + cfg.getGeneticOperators().get(0).toString());
 
         // set population size
@@ -117,9 +113,6 @@ public class GeneticMusicChorale implements JMC {
 
         // set note generator
         cfg.setRandomGenerator(new NoteGenerator());
-
-
-
 
         //**************create a sample chromosome ************************
 
@@ -191,18 +184,10 @@ public class GeneticMusicChorale implements JMC {
             //System.out.println(i);
         } while (i < numGenerations);
 
-
-
-
-
         IChromosome chm = population.getFittestChromosome();
-
 
         System.out.println(chm.toString());
         Write.midi(ConverterUtil.getChoraleScore(chm), "generatedChorale.mid");
-
-
-
     }
 
     private static double getAVGFitness(Genotype p) {

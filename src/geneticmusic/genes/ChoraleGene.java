@@ -4,7 +4,7 @@
  */
 package geneticmusic.genes;
 
-import geneticmusic.domain.Note;
+import geneticmusic.genes.Note;
 import java.io.Serializable;
 import org.jgap.BaseGene;
 import org.jgap.Configuration;
@@ -38,10 +38,10 @@ public class ChoraleGene extends BaseGene implements Gene, Serializable{
      */
     public ChoraleGene(Configuration conf) throws InvalidConfigurationException{
         this(conf, 
-                NoteGenerator.getRandomNote(4, 5, 4, 4), 
-                NoteGenerator.getRandomNote(3, 5, 4, 4), 
-                NoteGenerator.getRandomNote(3, 4, 4, 4), 
-                NoteGenerator.getRandomNote(2, 4, 4, 4));  
+                NoteGenerator.getRandomNote(5, 7, 4, 16),
+                NoteGenerator.getRandomNote(4, 6, 4, 16),
+                NoteGenerator.getRandomNote(3, 5, 4, 16),
+                NoteGenerator.getRandomNote(2, 4, 4, 16));
     }
 
     /**
@@ -66,8 +66,23 @@ public class ChoraleGene extends BaseGene implements Gene, Serializable{
     }
 
     @Override
-    protected Object getInternalValue() {
+    public Note[] getInternalValue() {
         return new Note[] {soprano, alto, tenor, bass};
+    }
+
+    public void changeNote(Note newNote, int pos) {
+        if(pos == 0) {
+            this.soprano = newNote;
+        }
+        else if (pos == 1) {
+            this.alto = newNote;
+        }
+        else if (pos == 2) {
+            this.tenor = newNote;
+        }
+        else if (pos == 3) {
+            this.bass = newNote;
+        }
     }
 
     /**

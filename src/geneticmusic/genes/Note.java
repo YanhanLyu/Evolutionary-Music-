@@ -48,6 +48,14 @@ public class Note {
         return this.alteration;
     }
 
+    public void setPitch(Pitch pitch) {this.pitch = pitch;}
+
+    public void setOctave(int octave) {this.octave = octave;}
+
+    public void setAlteration(Alteration alteration) {this.alteration = alteration;}
+
+    public void setDuration(int duration) {this.duration = duration;}
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
