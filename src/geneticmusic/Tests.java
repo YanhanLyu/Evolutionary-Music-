@@ -4,9 +4,9 @@
  */
 package geneticmusic;
 
-import geneticmusic.domain.Alteration;
-import geneticmusic.domain.Note;
-import geneticmusic.domain.Pitch;
+import geneticmusic.genes.Alteration;
+import geneticmusic.genes.Note;
+import geneticmusic.genes.Pitch;
 import geneticmusic.jmusic.bridge.ConverterUtil;
 import geneticmusic.jmusic.bridge.HarmonicUtils;
 import geneticmusic.melodyRules.RithmContinuity;

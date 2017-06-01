@@ -107,6 +107,7 @@ public class GeneticMusicChorale implements JMC {
         cfg.setKeepPopulationSizeConstant(true);
         System.out.println("Selection Operator: " + cfg.getNaturalSelector(true, 0));
         System.out.println("Crossover: " + cfg.getGeneticOperators().get(0).toString());
+        System.out.println("The configuration is: " + cfg.toString());
 
         // set population size
         cfg.setPopulationSize(populationSize);
@@ -126,7 +127,10 @@ public class GeneticMusicChorale implements JMC {
         cfg.setSampleChromosome(sampleChromosome);
 
         //construct a population genotype
+        // TODO: convert the starting chromosome to .mid file too and compare
         Genotype population = Genotype.randomInitialGenotype(cfg);
+        IChromosome start = population.getFittestChromosome();
+        Write.midi(ConverterUtil.getChoraleScore(start), "startChorale.mid");
 
         //// evolve and evaluate
         double currentFitness = 0.0;

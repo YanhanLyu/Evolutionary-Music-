@@ -4,7 +4,7 @@
  */
 package geneticmusic.jmusic.bridge;
 
-import geneticmusic.domain.Note;
+import geneticmusic.genes.Note;
 
 /**
  * A utility class for the harmonies

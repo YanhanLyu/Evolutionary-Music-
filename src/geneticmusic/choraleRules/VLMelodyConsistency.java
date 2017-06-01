@@ -27,5 +27,8 @@ public class VLMelodyConsistency extends AbstractCompositionRule{
        
        return result;
     }
-    
+
+    public String getName() {
+        return "Voice Logic Rules";
+    }
 }

@@ -4,9 +4,9 @@
  */
 package geneticmusic.jmusic.bridge;
 
-import geneticmusic.domain.Alteration;
-import geneticmusic.domain.Note;
-import geneticmusic.domain.Pitch;
+import geneticmusic.genes.Alteration;
+import geneticmusic.genes.Note;
+import geneticmusic.genes.Pitch;
 import java.lang.reflect.Field;
 import jm.JMC;
 import jm.music.data.Part;

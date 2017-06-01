@@ -4,9 +4,9 @@
  */
 package geneticmusic.choraleRules;
 
-import geneticmusic.domain.Alteration;
-import geneticmusic.domain.Note;
-import geneticmusic.domain.Pitch;
+import geneticmusic.genes.Alteration;
+import geneticmusic.genes.Note;
+import geneticmusic.genes.Pitch;
 import geneticmusic.fitness.AbstractCompositionRule;
 import org.jgap.Gene;
 import org.jgap.IChromosome;
