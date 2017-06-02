@@ -18,9 +18,9 @@ public class EvoMusicRun {
     public static void main(String[] args) throws InvalidConfigurationException,
             UnsupportedOperationException, UnsupportedRepresentationException {
 
-        int numGenerations = 20;
+        int numGenerations = 200;
         int chromosomeSize = 8;
-        int populationSize = 10;
+        int populationSize = 100;
 
 
         // ********************** create a random population **********************
@@ -42,9 +42,17 @@ public class EvoMusicRun {
             }
             pop[i] = melody;
         }
-
+        // genaration run
+        GeneticMusicChoraleNew evolve = new GeneticMusicChoraleNew();
         for(int i = 0; i < numGenerations; i++) {
-            pop.GeneticMusicChoraleNew();
+
+            evolve.runGeneration(pop);
+            pop = evolve.tournamentSelection(pop, 5,cfg);
+            System.out.println("max: "+evolve.getMaxFitness(pop));
+            System.out.println("avg: "+evolve.calculateAveragFitness(pop));
         }
+        evolve.convertToMidi(cfg,evolve.getFittestIndividual(pop));
+
+
     }
 }

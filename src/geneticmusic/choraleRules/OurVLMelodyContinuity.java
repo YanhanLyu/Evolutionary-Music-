@@ -4,6 +4,7 @@
  */
 package geneticmusic.choraleRules;
 
+import geneticmusic.genes.ChoraleGene;
 import geneticmusic.genes.Note;
 import geneticmusic.fitness.AbstractCompositionRule;
 import org.jgap.Gene;
@@ -23,10 +24,9 @@ public class OurVLMelodyContinuity {
         this.weight = weight;
     }
 
-    public double evaluation(IChromosome ic) {
+    public double evaluation(ChoraleGene[] genes) {
         double result = 0.0;
 
-        Gene genes[] = ic.getGenes();
 
         for (int i = 0; i < genes.length - 1; i++) {
             Note[] currentChord = (Note[]) genes[i].getAllele();
