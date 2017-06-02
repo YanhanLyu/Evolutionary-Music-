@@ -9,7 +9,12 @@ import geneticmusic.choraleRules.*;
 //import javax.swing.JFrame;
 import geneticmusic.genes.Note;
 import geneticmusic.genes.NoteGenerator;
+import geneticmusic.jmusic.bridge.ConverterUtil;
 import jm.JMC;
+import org.jgap.Chromosome;
+import geneticmusic.genes.Alteration;
+import geneticmusic.genes.Note;
+import geneticmusic.genes.Pitch;
 //import jm.util.Write;
 //import org.jfree.chart.ChartFactory;
 //import org.jfree.chart.ChartPanel;
@@ -21,6 +26,7 @@ import jm.JMC;
 //import org.jfree.data.xy.XYSeries;
 //import org.jfree.data.xy.XYSeriesCollection;
 //import org.jgap.Chromosome;
+import jm.util.Write;
 import org.jgap.Configuration;
 //import org.jgap.FitnessFunction;
 //import org.jgap.Gene;
@@ -38,6 +44,7 @@ import org.jgap.impl.DefaultConfiguration;
 //import org.jgap.impl.TournamentSelector;
 //import org.jgap.impl.WeightedRouletteSelector;
 import java.util.*;
+import jm.constants.Scales;
 
 
 /**
@@ -82,8 +89,8 @@ public class GeneticMusicChoraleNew implements JMC {
         //     System.out.println("Tournament Size: " + tournamentk);
         //     System.out.println("Tournament p: " + tournamentp);
         // }
-        int populationSize = 5;
-        int chromosomeSize = 4;
+        int populationSize = 10;
+        int chromosomeSize = 20;
         int numGenerations = 100;
         double mutationRate = 0.1;
         double crossoverRate = 0.1;
@@ -185,19 +192,23 @@ public class GeneticMusicChoraleNew implements JMC {
                  }
              }
          }
+         for(int i = 0; i < populationSize; i++) {
+            System.out.println("A melody: ");
+            for(int j = 0; j < chromosomeSize; j++) {
+                System.out.println("population: "+i);
+                System.out.println(population[i][j]);
+            }
+        }
 
-        //fitness sharing here
-        ChoraleGene[][] newPopulation = new ChoraleGene[chromosomeSize][populationSize];
+        ChoraleGene[][] newPopulation = new ChoraleGene[populationSize][chromosomeSize];
         //implement tournament selection here
          for (int i = 0 ; i < populationSize; i ++){
-             int fittestIndividual = GeneticMusicChoraleNew.findFittest(200, populationSize,population);
+             int fittestIndividual = GeneticMusicChoraleNew.findFittest(3, populationSize,population);
              newPopulation[i] = population[fittestIndividual];
-             //test population
-//             for (int j = 0; j < chromosomeSize; j++){
-//                 System.out.println("newPopulation");
-//                 System.out.println(population[i][j].toString());
-//             }
          }
+
+        Chromosome sampleChromosome = new Chromosome(cfg, population[0]);
+        Write.midi(ConverterUtil.getChoraleScore(sampleChromosome), "startChorale.mid");
     }
 
     public static int findFittest(int k, int populationSize, ChoraleGene[][] population){
@@ -207,7 +218,7 @@ public class GeneticMusicChoraleNew implements JMC {
         for (int i = 0; i < k; i++){
             int index = rand.nextInt(populationSize);
             if (GeneticMusicChoraleNew.calculateFitness(population[index])>max){
-                System.out.println(GeneticMusicChoraleNew.calculateFitness(population[i]));
+                //System.out.println(GeneticMusicChoraleNew.calculateFitness(population[i]));
                 maxindex = index;
             }
         }
@@ -215,6 +226,18 @@ public class GeneticMusicChoraleNew implements JMC {
     }
 
     public static double calculateFitness(ChoraleGene[] choraleGene){
+        double weight = 1/10;
+        Note tonic = new Note(Pitch.C, 5, Alteration.N, 4);
+        OurVEVoiceExtension verticalExtension = new OurVEVoiceExtension(weight);
+        OurVEVoiceIntervalRelation verticalIntervalRelation = new OurVEVoiceIntervalRelation(weight);
+        OurHRInScale inScale = new OurHRInScale(Scales.MAJOR_SCALE, tonic, weight*2);
+        OurHCValidChords validChords = new OurHCValidChords(weight, Scales.MAJOR_SCALE, tonic);
+        OurVIVoiceCross voiceCross = new OurVIVoiceCross(weight*1);
+        OurVLMelodyContinuity melodyConsistency = new OurVLMelodyContinuity(weight*2.2);
+        OurVLMediumVoicesContinuity mediumVoices = new OurVLMediumVoicesContinuity(weight*1);
+        OurHCAvoidDissonances avoidDissonances = new OurHCAvoidDissonances(weight*2);
+        OurVIParallelism parallelism = new OurVIParallelism(weight*1);
+        OurHCDuplicateFundamental duplicateFundamental = new OurHCDuplicateFundamental(weight*2, tonic, Scales.MAJOR_SCALE);
         OurVLMediumVoicesContinuity mvc = new OurVLMediumVoicesContinuity(0.2);
         return mvc.evaluation(choraleGene);
     }
