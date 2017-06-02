@@ -145,15 +145,6 @@ public class GeneticMusicChoraleNew implements JMC {
             population[i] = melody;
         }
 
-        //test population
-//        for(int i = 0; i < populationSize; i++) {
-//            for (int j = 0; j < chromosomeSize; j++) {
-//                System.out.println(population[i][j].toString());
-//            }
-//            //population[i] = gene;
-//        }
-
-
         
 //        for (int i = 0; i<populationSize; i++){
 //            for (int j = 0; j < chromosomeSize; j++) {
@@ -162,6 +153,14 @@ public class GeneticMusicChoraleNew implements JMC {
 //            }
 //            Melody melody = new Melody(chromosomeSize,gene);
 //            population[i] = melody;
+//        }
+
+        //test population
+//        for(int i = 0; i < populationSize; i++) {
+//            for (int j = 0; j < chromosomeSize; j++) {
+//                System.out.println(population[i][j].toString());
+//            }
+//            //population[i] = gene;
 //        }
 
         GeneticOperators geneticOperator = new GeneticOperators();
