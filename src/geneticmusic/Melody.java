@@ -10,4 +10,8 @@ public class Melody{
         	chorale[0] = gene[0];
         }
     }
+
+    public ChoraleGene[] getGene(){
+        return chorale;
+    }
 }

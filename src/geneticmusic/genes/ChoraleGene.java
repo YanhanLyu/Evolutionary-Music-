@@ -166,4 +166,32 @@ public class ChoraleGene extends BaseGene implements Gene, Serializable{
         Note[] otherNotes = (Note[]) other.getAllele();
         return (int) soprano.distance(otherNotes[0]);
     }
+    public Note getAlto(){
+        return this.alto;
+    }
+    public Note getSoprano(){
+        return this.soprano;
+    }
+
+     public Note getTenor(){
+        return this.tenor;
+    }
+    public Note getBass(){
+        return this.bass;
+    }
+
+    public void setBass(Note bass){
+        this.bass = bass;
+    }
+    public void setSoprano(Note soprano){
+        this.soprano =soprano;
+    }
+
+     public void setTenor(Note tenor){
+        this.tenor = tenor;
+    }
+    public void setAlto(Note alto){
+        this.alto = alto;
+    }
+
 }
