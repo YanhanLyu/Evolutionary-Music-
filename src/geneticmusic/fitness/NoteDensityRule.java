@@ -41,5 +41,8 @@ public class NoteDensityRule implements CompositionRule{
         } catch(Exception e){}
         return result;
     }
-    
+
+    public String getName() {
+        return "Note Density Rule";
+    }
 }

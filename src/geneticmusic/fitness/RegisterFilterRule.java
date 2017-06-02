@@ -43,13 +43,11 @@ public class RegisterFilterRule implements CompositionRule {
                     result += 0.1 * (1 / (totalNotes));
                 }
             }
-
-
-
         }
-
-
-
         return weight * result;
+    }
+
+    public String getName() {
+        return "Register Filter Rule";
     }
 }

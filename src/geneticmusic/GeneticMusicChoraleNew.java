@@ -113,7 +113,6 @@ public class GeneticMusicChoraleNew implements JMC {
 
         }
 
-
         // default configuration object
         //Configuration cfg = new DefaultConfiguration();
 
@@ -192,8 +191,6 @@ public class GeneticMusicChoraleNew implements JMC {
                 System.out.println("alto"+printGene[j].getAlto().getPitch());
                 System.out.println("soprano"+printGene[j].getSoprano().getPitch());
                 System.out.println("tenor"+printGene[j].getTenor().getPitch()+"\n");
-
-
             }
         }
     }

@@ -7,9 +7,9 @@ package geneticmusic.fitness;
 import geneticmusic.melodyRules.RithmContinuity;
 import geneticmusic.melodyRules.MelodyContinuity;
 import geneticmusic.melodyRules.InScaleRule;
-import geneticmusic.domain.Alteration;
-import geneticmusic.domain.Note;
-import geneticmusic.domain.Pitch;
+import geneticmusic.genes.Alteration;
+import geneticmusic.genes.Note;
+import geneticmusic.genes.Pitch;
 import jm.constants.Durations;
 import jm.constants.Scales;
 

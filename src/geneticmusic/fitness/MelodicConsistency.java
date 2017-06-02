@@ -47,11 +47,10 @@ public class MelodicConsistency implements CompositionRule {
             else
                  result +=  -1/(genes.length*1.0);
         }
-        
-        
-        
-      
-        
         return weight*result;
+    }
+
+    public String getName() {
+        return "Melodic Consistency Rule";
     }
 }

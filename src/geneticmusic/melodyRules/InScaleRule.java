@@ -1,7 +1,7 @@
 package geneticmusic.melodyRules;
 
 import geneticmusic.fitness.CompositionRule;
-import geneticmusic.domain.Note;
+import geneticmusic.genes.Note;
 import geneticmusic.jmusic.bridge.ConverterUtil;
 import jm.music.data.Phrase;
 import jm.music.tools.PhraseAnalysis;

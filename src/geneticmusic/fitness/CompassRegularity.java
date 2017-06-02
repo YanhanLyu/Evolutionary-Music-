@@ -33,7 +33,9 @@ public class CompassRegularity implements CompositionRule {
             result += 10;
         
         return result;
+    }
 
-
+    public String getName() {
+        return "Compass Regularity Rule";
     }
 }

@@ -23,14 +23,17 @@ public class ThirdDistance implements CompositionRule{
     
     @Override
     public double evaluate(IChromosome ic) {
+        // TODO: evaluate in construction
         double value = 0.0;
         
         Gene[] genes = ic.getGenes();
         for (int i = 0; i < genes.length - 1; i++) {
             Note currentNote = (Note) genes[i].getAllele();
-           
-                        
          }
+         return value;
     }
-    
+
+    public String getName() {
+        return "Third Distance Rule";
+    }
 }

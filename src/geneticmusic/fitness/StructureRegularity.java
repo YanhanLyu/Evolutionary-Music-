@@ -21,8 +21,6 @@ public class StructureRegularity implements CompositionRule {
         this.weight = weight;
     }
 
-    
-    
     @Override
     public double evaluate(IChromosome ic) {
         double result = 0.0;
@@ -41,7 +39,9 @@ public class StructureRegularity implements CompositionRule {
             result += 0.5;
         
         return weight*result;
+    }
 
-
+    public String getName() {
+        return "Structure Regularity Rule";
     }
 }

@@ -4,9 +4,9 @@
  */
 package geneticmusic.genes;
 
-import geneticmusic.domain.Pitch;
-import geneticmusic.domain.Alteration;
-import geneticmusic.domain.Note;
+import geneticmusic.genes.Pitch;
+import geneticmusic.genes.Alteration;
+import geneticmusic.genes.Note;
 import java.io.Serializable;
 import org.jgap.BaseGene;
 import org.jgap.Configuration;

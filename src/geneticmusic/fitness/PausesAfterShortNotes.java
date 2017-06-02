@@ -27,10 +27,11 @@ public class PausesAfterShortNotes implements CompositionRule{
                !currentNote.getPitch().equals(Pitch.R) &&
                     currentNote.getDuration() > 8)
                 result = -10.0;
-            
          }
-         
          return result;
     }
-    
+
+    public String getName() {
+        return "Pauses After Short Notes Rule";
+    }
 }

@@ -24,9 +24,11 @@ public class PauseRegulationRule implements CompositionRule{
         for(Gene current: ic.getGenes()){
             Note currentNote = (Note) current.getAllele();
             restCount = currentNote.getPitch().equals(Pitch.R) ? 1 : 0;
-        } 
-        
+        }
         return -restCount;
     }
-    
+
+    public String getName() {
+        return "Pause Regulation Rule";
+    }
 }

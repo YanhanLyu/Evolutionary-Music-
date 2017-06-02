@@ -45,4 +45,8 @@ public class InScaleRule implements CompositionRule {
         //System.out.println("evaluating: "+result);
         return weight*result;
     }
+
+    public String getName() {
+        return "In Scale Rule";
+    }
 }

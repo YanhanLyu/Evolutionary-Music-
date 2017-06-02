@@ -38,16 +38,11 @@ public class NoRepeatedNotes implements CompositionRule {
                if(currentNote.distance(nextNote) == 0)
                     result +=  (-1 / (totalNotes));
                 }
-               
-
-               
             }
-
-
-
-        
-
-     
         return weight * result;
+    }
+
+    public String getName() {
+        return "No Repeated Notes Rule";
     }
 }

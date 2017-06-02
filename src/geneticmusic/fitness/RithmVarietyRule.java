@@ -38,12 +38,10 @@ public class RithmVarietyRule implements CompositionRule{
              //System.out.println("distance " + distance);
            
         }
-        
-        
-        
-      
-        
         return weight*result;
     }
-    
+
+    public String getName() {
+        return "Rhythm Variety Rule";
+    }
 }
