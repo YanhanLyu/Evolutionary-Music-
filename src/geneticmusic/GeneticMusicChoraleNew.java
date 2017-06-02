@@ -48,96 +48,33 @@ import jm.constants.Scales;
 
 
 /**
+ * Provides a news of evolving a population of melody
+ *
  * @author Hazel Que, Yanhan Lyu
  * @version 31 May 2017
  */
 public class GeneticMusicChoraleNew implements JMC {
 
-    public static void main(String[] args) throws InvalidConfigurationException,
+    private int populationSize, chromosomeSize, selParam;
+    private double mutationRate, crossoverRate;
+
+    public GeneticMusicChoraleNew() {
+        // defaults
+        populationSize = 10;
+        chromosomeSize = 4;
+        mutationRate = 0.1;
+        crossoverRate = 0.1;
+        selParam = 1;
+    }
+
+    public ChoraleGene[][] GeneticMusicChoraleNew(ChoraleGene[][] pop) throws InvalidConfigurationException,
             UnsupportedOperationException, UnsupportedRepresentationException {
 
-        // // default settings - even if user does not pass in command-line arguments, the program would run
-        // int populationSize = 40;
-        // int chromosomeSize = 8;
-        // int numGenerations = 100;
-        // String selector = "tournament";
-        // int tournamentk = 3;
-        // double tournamentp = 0.7;
-
-        // // parse the arguments
-        // // TODO: add command-line help text
-        // if (args.length > 0) {
-        //     populationSize = Integer.parseInt(args[0]);
-        //     chromosomeSize = Integer.parseInt(args[1]);
-        //     numGenerations = Integer.parseInt(args[2]);
-        //     selector = args[3];
-
-        //     if(args.length > 4) {
-        //         tournamentk = Integer.parseInt(args[4]);
-        //         tournamentp = Double.parseDouble(args[5]);
-        //     }
-        // }
-
-        // // print the input parameters to the terminal
-        // System.out.println("GA Configuration:");
-        // System.out.println("Population Size: " + populationSize);
-        // System.out.println("Chromosome Size: " + chromosomeSize);
-        // System.out.println("Number of Generations: " + numGenerations);
-        // System.out.println("Selection Operator" + selector);
-
-        // if(selector.equals("tournament")) {
-        //     System.out.println("Tournament Size: " + tournamentk);
-        //     System.out.println("Tournament p: " + tournamentp);
-        // }
-        int populationSize = 10;
-        int chromosomeSize = 20;
-        int numGenerations = 100;
-        double mutationRate = 0.1;
-        double crossoverRate = 0.1;
-        String selector = "tournament";
-        int tournamentk = 3;
-        double tournamentp = 0.7;
-
-        // parse the arguments
-        if (args.length > 0) {
-            populationSize = Integer.parseInt(args[0]);
-            chromosomeSize = Integer.parseInt(args[1]);
-            numGenerations = Integer.parseInt(args[2]);
-            selector = args[3];
-            mutationRate = Double.parseDouble(args[4]);
-            crossoverRate = Double.parseDouble(args[5]);
-
-            if (args.length > 6) {
-                tournamentk = Integer.parseInt(args[6]);
-                tournamentp = Double.parseDouble(args[7]);
-            }
-        }
-        System.out.println("GA configuration:");
-        System.out.println("population size: " + populationSize);
-        System.out.println("chromosome size: " + chromosomeSize);
-        System.out.println("number of generations: " + numGenerations);
-        System.out.println("selection operator: " + selector);
-
-        if(selector.equals("tournament")){
-            System.out.println("tournament size: "+tournamentk);
-            System.out.println("tournament p: "+tournamentp);
-
-        }
-
-        // default configuration object
-        //Configuration cfg = new DefaultConfiguration();
-
-        // initialize a new population
-        // ChoraleGene[] population = new ChoraleGene[chromosomeSize];
-        // for(int i = 0; i < chromosomeSize; i++) {
-        //     population[i] = new ChoraleGene(cfg);
-        //     System.out.println(population[i].toString());
-        // }
-
         // ********************** create a random population **********************
+        // TODO: move these two lines to the evolve function
+        // ChoraleGene[][] population = new ChoraleGene[populationSize][chromosomeSize];
         Configuration cfg = new DefaultConfiguration();
-        ChoraleGene[][] population = new ChoraleGene[populationSize][chromosomeSize];
-        for(int i = 0; i < population.length; i++) {
+        for (int i = 0; i < pop.length; i++) {
             // ChoraleGene[] is a melody
             ChoraleGene[] melody = new ChoraleGene[chromosomeSize];
             // fill the sample melody with individual chords
@@ -151,64 +88,54 @@ public class GeneticMusicChoraleNew implements JMC {
                 // add the generated chord to the melody
                 melody[j] = currentGene;
             }
-            population[i] = melody;
+            pop[i] = melody;
         }
-
-//        System.out.println("**********test original**********");
-//        for(int i = 0; i < populationSize; i++) {
-//            System.out.println("A melody: ");
-//            for(int j = 0; j < chromosomeSize; j++) {
-//                System.out.println(population[i][j]);
-//            }
-//        }
 
         // ********************** single mutation **********************
         GeneticOperators geneticOperator = new GeneticOperators();
         Random rand = new Random();
 
-         for (int i = 0; i < population.length; i++){
-             double test = rand.nextDouble();
-             if (test <= mutationRate) {
-                 // create a new melody
-                 ChoraleGene[] newMelody = new ChoraleGene[chromosomeSize];
-                 for (int j = 0; j < newMelody.length; j++) {
-                     ChoraleGene choraleGene = population[i][j];
-                     ChoraleGene newGene = geneticOperator.mutate(choraleGene, mutationRate);
-                     newMelody[j] = newGene;
-                 }
-                 population[i] = newMelody;
-             }
-         }
-
-         // ********************** single crossover **********************
-         for (int i = 0; i < population.length; i++){
-             double test = rand.nextDouble();
-             if(test <= crossoverRate) {
-                 for(int j = 0; j < chromosomeSize - 1; j++) {
-                     ChoraleGene currentNote = population[i][j];
-                     ChoraleGene nextNote = population[i][j+1];
-                     population[i][j] = nextNote;
-                     population[i][j+1] = currentNote;
-                 }
-             }
-         }
-         for(int i = 0; i < populationSize; i++) {
-            System.out.println("A melody: ");
-            for(int j = 0; j < chromosomeSize; j++) {
-                System.out.println("population: "+i);
-                System.out.println(population[i][j]);
+        for (int i = 0; i < pop.length; i++) {
+            double test = rand.nextDouble();
+            if (test <= mutationRate) {
+                // create a new melody
+                ChoraleGene[] newMelody = new ChoraleGene[chromosomeSize];
+                for (int j = 0; j < newMelody.length; j++) {
+                    ChoraleGene choraleGene = pop[i][j];
+                    ChoraleGene newGene = geneticOperator.mutate(choraleGene, mutationRate);
+                    newMelody[j] = newGene;
+                }
+                pop[i] = newMelody;
             }
         }
 
+        // ********************** single crossover **********************
+        for (int i = 0; i < pop.length; i++) {
+            double test = rand.nextDouble();
+            if (test <= crossoverRate) {
+                for (int j = 0; j < chromosomeSize - 1; j++) {
+                    ChoraleGene currentNote = pop[i][j];
+                    ChoraleGene nextNote = pop[i][j + 1];
+                    pop[i][j] = nextNote;
+                    pop[i][j + 1] = currentNote;
+                }
+            }
+        }
+        return pop;
+    }
+
+    public ChoraleGene[][] tournamentSelection(ChoraleGene[][] pop, int elitism) throws InvalidConfigurationException {
+        Configuration cfg = new DefaultConfiguration();
         ChoraleGene[][] newPopulation = new ChoraleGene[populationSize][chromosomeSize];
         //implement tournament selection here
          for (int i = 0 ; i < populationSize; i ++){
-             int fittestIndividual = GeneticMusicChoraleNew.findFittest(3, populationSize,population);
-             newPopulation[i] = population[fittestIndividual];
+             int fittestIndividual = GeneticMusicChoraleNew.findFittest(3, populationSize,pop);
+             newPopulation[i] = pop[fittestIndividual];
          }
 
-        Chromosome sampleChromosome = new Chromosome(cfg, population[0]);
+        Chromosome sampleChromosome = new Chromosome(cfg, pop[0]);
         Write.midi(ConverterUtil.getChoraleScore(sampleChromosome), "startChorale.mid");
+        return newPopulation;
     }
 
     public static int findFittest(int k, int populationSize, ChoraleGene[][] population){
