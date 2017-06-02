@@ -82,8 +82,8 @@ public class GeneticMusicChoraleNew implements JMC {
         //     System.out.println("Tournament Size: " + tournamentk);
         //     System.out.println("Tournament p: " + tournamentp);
         // }
-        int populationSize =200;
-        int chromosomeSize = 10;
+        int populationSize = 10;
+        int chromosomeSize = 4;
         int numGenerations = 100;
         double mutationRate = 0.1;
         String selector = "tournament";
@@ -144,44 +144,23 @@ public class GeneticMusicChoraleNew implements JMC {
             }
             population[i] = melody;
         }
-
         
-//        for (int i = 0; i<populationSize; i++){
-//            for (int j = 0; j < chromosomeSize; j++) {
-//                gene[j] = new ChoraleGene(cfg);
-//                //System.out.println(gene[j].toString());
-//            }
-//            Melody melody = new Melody(chromosomeSize,gene);
-//            population[i] = melody;
-//        }
-
-        //test population
-//        for(int i = 0; i < populationSize; i++) {
-//            for (int j = 0; j < chromosomeSize; j++) {
-//                System.out.println(population[i][j].toString());
-//            }
-//            //population[i] = gene;
-//        }
-
+        // ********************** single mutation **********************
         GeneticOperators geneticOperator = new GeneticOperators();
-
+        Random rand = new Random();
         //mutate here
-         for (int i = 0; i<populationSize; i++){
-             // create a new melody
-             ChoraleGene[] newGenes = new ChoraleGene[chromosomeSize];
-             for (int j = 0; j < newGenes.length; j++) {
-                 // get and mutate the current chord
-                 ChoraleGene choraleGene = population[i][j];
-                 ChoraleGene newGene = geneticOperator.mutate(choraleGene, mutationRate);
-                 //System.out.println("newGene"+newGene);
-                 newGenes[j] = newGene;
+         for (int i = 0; i< populationSize; i++){
+             double test = rand.nextDouble();
+             if (test <= mutationRate) {
+                 // create a new melody
+                 ChoraleGene[] newMelody = new ChoraleGene[chromosomeSize];
+                 for (int j = 0; j < newMelody.length; j++) {
+                     ChoraleGene choraleGene = population[i][j];
+                     ChoraleGene newGene = geneticOperator.mutate(choraleGene, mutationRate);
+                     newMelody[j] = newGene;
+                 }
+                 population[i] = newMelody;
              }
-             //System.out.println("a melody"+ newGenes.toString());
-             //test if mutate right
-//             for (int j = 0; j < chromosomeSize; j++){
-//                 System.out.println("test gene"+ newGenes[j]);
-//             }
-             population[i] = newGenes;
          }
 
          //crossover
