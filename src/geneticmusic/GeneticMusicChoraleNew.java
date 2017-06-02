@@ -233,7 +233,7 @@ public class GeneticMusicChoraleNew implements JMC {
     }
 
     public static double calculateFitness(ChoraleGene[] choraleGene){
-        OurMediumVoiceContinuityRule mvc = new OurMediumVoiceContinuityRule(0.2);
+        OurVLMediumVoicesContinuity mvc = new OurVLMediumVoicesContinuity(0.2);
         return mvc.evaluation(choraleGene);
     }
 }

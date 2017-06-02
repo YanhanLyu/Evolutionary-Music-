@@ -3,10 +3,10 @@ package geneticmusic.choraleRules;
 import geneticmusic.genes.ChoraleGene;
 import geneticmusic.genes.Note;
 
-public class OurMediumVoiceContinuityRule{
-    double weight;
+public class OurVLMediumVoicesContinuity{
+    private double weight;
 
-    public OurMediumVoiceContinuityRule(double weight) {
+    public OurVLMediumVoicesContinuity(double weight) {
         this.weight = weight;
     }
 
@@ -38,7 +38,7 @@ public class OurMediumVoiceContinuityRule{
                 result += 1 / ((genes.length - 1) * 2.0); //proporcional to the number of intervals
             }
         }
-        return result;
+        return weight*result;
 
 
     }
