@@ -4,13 +4,9 @@
  */
 package geneticmusic.genes;
 
-import geneticmusic.genes.Pitch;
-import geneticmusic.genes.Alteration;
-import geneticmusic.genes.Note;
-import java.util.Random;
-
-import org.jetbrains.annotations.NotNull;
 import org.jgap.RandomGenerator;
+
+import java.util.Random;
 
 /**
  * A utility class that generates random notes
@@ -25,7 +21,6 @@ public class NoteGenerator implements RandomGenerator{
     /**
      * @return a new random Note
      */
-    @NotNull
     public static Note nextNote(){
         return new Note(
                 getRandomPitch(), 
