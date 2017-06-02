@@ -82,10 +82,11 @@ public class GeneticMusicChoraleNew implements JMC {
         //     System.out.println("Tournament Size: " + tournamentk);
         //     System.out.println("Tournament p: " + tournamentp);
         // }
-        int populationSize = 10;
+        int populationSize = 5;
         int chromosomeSize = 4;
         int numGenerations = 100;
         double mutationRate = 0.1;
+        double crossoverRate = 0.1;
         String selector = "tournament";
         int tournamentk = 3;
         double tournamentp = 0.7;
@@ -96,11 +97,12 @@ public class GeneticMusicChoraleNew implements JMC {
             chromosomeSize = Integer.parseInt(args[1]);
             numGenerations = Integer.parseInt(args[2]);
             selector = args[3];
-            mutationRate = Integer.parseInt(args[4]);
+            mutationRate = Double.parseDouble(args[4]);
+            crossoverRate = Double.parseDouble(args[5]);
 
-            if (args.length > 5) {
-                tournamentk = Integer.parseInt(args[5]);
-                tournamentp = Double.parseDouble(args[6]);
+            if (args.length > 6) {
+                tournamentk = Integer.parseInt(args[6]);
+                tournamentp = Double.parseDouble(args[7]);
             }
         }
         System.out.println("GA configuration:");
@@ -144,12 +146,20 @@ public class GeneticMusicChoraleNew implements JMC {
             }
             population[i] = melody;
         }
-        
+
+//        System.out.println("**********test original**********");
+//        for(int i = 0; i < populationSize; i++) {
+//            System.out.println("A melody: ");
+//            for(int j = 0; j < chromosomeSize; j++) {
+//                System.out.println(population[i][j]);
+//            }
+//        }
+
         // ********************** single mutation **********************
         GeneticOperators geneticOperator = new GeneticOperators();
         Random rand = new Random();
-        //mutate here
-         for (int i = 0; i< populationSize; i++){
+
+         for (int i = 0; i < population.length; i++){
              double test = rand.nextDouble();
              if (test <= mutationRate) {
                  // create a new melody
@@ -163,24 +173,17 @@ public class GeneticMusicChoraleNew implements JMC {
              }
          }
 
-         //crossover
-         for (int i = 0; i<populationSize; i++){
-             ChoraleGene[] newGenes = new ChoraleGene[chromosomeSize];
-             for (int j = 0; j < chromosomeSize; j= j+2) {
-                 if (i < chromosomeSize-1) {
-                     ChoraleGene choraleGene1 = population[i][j];
-                     ChoraleGene choraleGene2 = population[i][j+1];
-                     //System.out.println("ChoraleGene1"+choraleGene1.toString());
-                     //System.out.println("ChoraleGene2"+choraleGene2.toString());
-                     ChoraleGene newGene[] = geneticOperator.crossover(choraleGene1, choraleGene2);
-                     //System.out.println("new ChoraleGene1"+newGene[0].toString());
-                     //System.out.println("new ChoraleGene2"+newGene[1].toString());
-
-                     newGenes[j] = newGene[0];
-                     newGenes[j+1] = newGene[1];
+         // ********************** single crossover **********************
+         for (int i = 0; i < population.length; i++){
+             double test = rand.nextDouble();
+             if(test <= crossoverRate) {
+                 for(int j = 0; j < chromosomeSize - 1; j++) {
+                     ChoraleGene currentNote = population[i][j];
+                     ChoraleGene nextNote = population[i][j+1];
+                     population[i][j] = nextNote;
+                     population[i][j+1] = currentNote;
                  }
              }
-             population[i] = newGenes;
          }
 
         //fitness sharing here
