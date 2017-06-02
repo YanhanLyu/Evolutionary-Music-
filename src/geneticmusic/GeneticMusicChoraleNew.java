@@ -114,17 +114,28 @@ public class GeneticMusicChoraleNew implements JMC {
             System.out.println("tournament p: "+tournamentp);
 
         }
+
+        // default configuration object
+        //Configuration cfg = new DefaultConfiguration();
+
+        // initialize a new population
+        // ChoraleGene[] population = new ChoraleGene[chromosomeSize];
+        // for(int i = 0; i < chromosomeSize; i++) {
+        //     population[i] = new ChoraleGene(cfg);
+        //     System.out.println(population[i].toString());
+        // }
+
         Configuration cfg = new DefaultConfiguration();
         // create a population
-        ChoraleGene[][] population = new ChoraleGene[populationSize][chromosomeSize];
+        ChoraleGene[][] population = new ChoraleGene[chromosomeSize][populationSize];
         //System.out.println("population length"+population.length);
         //System.out.println("chromosome length" + population[0].length);
-        for(int i = 0; i < populationSize; i++) {
+        for(int i = 0; i < population.length; i++) {
             // a ChoraleGene is a set of Notes in the current tempo,
             // so ChoraleGene[] is a melody
             ChoraleGene[] gene = new ChoraleGene[chromosomeSize];
             // fill the sample melody with individual chords
-            for (int j = 0; j < chromosomeSize; j++) {
+            for (int j = 0; j < gene.length; j++) {
                 ChoraleGene currentGene = new ChoraleGene(cfg);
                 // fill the chord with individual Notes
                 for (int k = 0; k < 4; k++) {
@@ -138,9 +149,28 @@ public class GeneticMusicChoraleNew implements JMC {
             }
             population[i] = gene;
         }
+        //test population
+//        for(int i = 0; i < populationSize; i++) {
+//            for (int j = 0; j < chromosomeSize; j++) {
+//                System.out.println(population[i][j].toString());
+//            }
+//            //population[i] = gene;
+//        }
+
+
+        
+//        for (int i = 0; i<populationSize; i++){
+//            for (int j = 0; j < chromosomeSize; j++) {
+//                gene[j] = new ChoraleGene(cfg);
+//                //System.out.println(gene[j].toString());
+//            }
+//            Melody melody = new Melody(chromosomeSize,gene);
+//            population[i] = melody;
+//        }
 
         GeneticOperators geneticOperator = new GeneticOperators();
         //mutate here
+
          for (int i = 0; i<populationSize; i++){
              ChoraleGene[] newGenes = new ChoraleGene[chromosomeSize];
              for (int j = 0; j < chromosomeSize; j++) {
@@ -152,67 +182,40 @@ public class GeneticMusicChoraleNew implements JMC {
                  //System.out.println("newGene"+newGene);
                  newGenes[j] = newGene;
              }
-//             System.out.println("a melody"+ newGenes.toString());
-//             //test if mutate right
+             //System.out.println("a melody"+ newGenes.toString());
+             //test if mutate right
 //             for (int j = 0; j < chromosomeSize; j++){
 //                 System.out.println("test gene"+ newGenes[j]);
 //             }
              population[i] = newGenes;
          }
-        //test population
-//        for (int i = 0; i < populationSize; i++){
-//             for (int j = 0; j < chromosomeSize; j++){
-//                 System.out.println("population: "+i);
-//                 System.out.println("chromosome: "+j);
-//                 System.out.println(population[i][j]);
-//             }
-//        }
-
 
          //crossover
-         for (int i = 0; i<populationSize; i=i+2){
+         for (int i = 0; i<populationSize; i++){
              ChoraleGene[] newGenes = new ChoraleGene[chromosomeSize];
              for (int j = 0; j < chromosomeSize; j= j+2) {
-                     //System.out.println(j);
+                 if (i < chromosomeSize-1) {
                      ChoraleGene choraleGene1 = population[i][j];
-                     ChoraleGene choraleGene2 = population[i+1][j];
+                     ChoraleGene choraleGene2 = population[i][j+1];
                      //System.out.println("ChoraleGene1"+choraleGene1.toString());
                      //System.out.println("ChoraleGene2"+choraleGene2.toString());
                      ChoraleGene newGene[] = geneticOperator.crossover(choraleGene1, choraleGene2);
                      //System.out.println("new ChoraleGene1"+newGene[0].toString());
                      //System.out.println("new ChoraleGene2"+newGene[1].toString());
+
                      newGenes[j] = newGene[0];
                      newGenes[j+1] = newGene[1];
-
+                 }
              }
              population[i] = newGenes;
          }
 
-//        for (int i = 0; i < populationSize; i++){
-//            for (int j = 0; j < chromosomeSize; j++){
-//                System.out.println("population: "+i);
-//                System.out.println("chromosome: "+j);
-//                System.out.println(population[i][j]);
-//            }
-//        }
-
         //fitness sharing here
 
-        //test population
-//        for (int i = 0; i < populationSize; i++){
-//             for (int j = 0; j < chromosomeSize; j++){
-//                 System.out.println("population: "+i);
-//                 System.out.println("chromosome: "+j);
-//                 System.out.println(population[i][j]);
-//             }
-//        }
-
-
-
+        ChoraleGene[][] newPopulation = new ChoraleGene[chromosomeSize][populationSize];
         //implement tournament selection here
-        ChoraleGene[][] newPopulation = new ChoraleGene[populationSize][chromosomeSize];
          for (int i = 0 ; i < populationSize; i ++){
-             int fittestIndividual = GeneticMusicChoraleNew.findFittest(3, populationSize,population);
+             int fittestIndividual = GeneticMusicChoraleNew.findFittest(200, populationSize,population);
              newPopulation[i] = population[fittestIndividual];
              //test population
 //             for (int j = 0; j < chromosomeSize; j++){
@@ -227,18 +230,12 @@ public class GeneticMusicChoraleNew implements JMC {
         Random rand = new Random();
         int maxindex = 0;
         for (int i = 0; i < k; i++){
-            int index = rand.nextInt(populationSize-1);
-            //System.out.println(population[]);
-            //GeneticMusicChoraleNew.calculateFitness(population[8]);
-            //System.out.println(index);
-            System.out.println("index"+GeneticMusicChoraleNew.calculateFitness(population[index]));
+            int index = rand.nextInt(populationSize);
             if (GeneticMusicChoraleNew.calculateFitness(population[index])>max){
+                System.out.println(GeneticMusicChoraleNew.calculateFitness(population[i]));
                 maxindex = index;
-
-           }
-
+            }
         }
-        System.out.println("max"+GeneticMusicChoraleNew.calculateFitness(population[maxindex]));
         return maxindex;
     }
 
