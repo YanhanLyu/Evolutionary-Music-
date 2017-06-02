@@ -37,8 +37,6 @@ public class OurMediumVoiceContinuityRule{
             if (distanceb < 4 && distanceb > 0) {
                 result += 1 / ((genes.length - 1) * 2.0); //proporcional to the number of intervals
             }
-
-
         }
         return result;
 
