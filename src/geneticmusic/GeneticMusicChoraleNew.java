@@ -58,13 +58,17 @@ public class GeneticMusicChoraleNew implements JMC {
     private int populationSize, chromosomeSize, selParam;
     private double mutationRate, crossoverRate;
 
-    public GeneticMusicChoraleNew() {
+    public GeneticMusicChoraleNew(int populationSize,
+                                  int chromosomeSize,
+                                  double mutationRate,
+                                  double crossoverRate,
+                                  int selParam) {
         // defaults
-        populationSize = 100;
-        chromosomeSize = 8;
-        mutationRate = 0.01;
-        crossoverRate = 0.01;
-        selParam = 1;
+        this.populationSize = populationSize;
+        this.chromosomeSize = chromosomeSize;
+        this.mutationRate = mutationRate;
+        this.crossoverRate = crossoverRate;
+        this.selParam = selParam;
     }
 
     public ChoraleGene[][] runGeneration(ChoraleGene[][] pop) throws InvalidConfigurationException,
@@ -124,21 +128,21 @@ public class GeneticMusicChoraleNew implements JMC {
         return pop;
     }
 
-    public ChoraleGene[][] tournamentSelection(ChoraleGene[][] pop, int elitism, Configuration cfg) throws InvalidConfigurationException {
+    public ChoraleGene[][] tournamentSelection(ChoraleGene[][] pop, Configuration cfg) throws InvalidConfigurationException {
         ChoraleGene[][] newPopulation = new ChoraleGene[populationSize][chromosomeSize];
         //implement tournament selection here
          for (int i = 0 ; i < populationSize; i ++){
-             int fittestIndividual =findFittest(3, populationSize,pop);
+             int fittestIndividual =findFittest(selParam, populationSize,pop);
              newPopulation[i] = pop[fittestIndividual];
          }
         return newPopulation;
     }
 
-    private int findFittest(int k, int populationSize, ChoraleGene[][] population){
+    private int findFittest(int selParam, int populationSize, ChoraleGene[][] population){
         double max = 0;
         Random rand = new Random();
         int maxindex = 0;
-        for (int i = 0; i < k; i++){
+        for (int i = 0; i < selParam; i++){
             int index = rand.nextInt(populationSize);
             if (calculateFitness(population[index])>max){
                 //System.out.println(GeneticMusicChoraleNew.calculateFitness(population[i]));
@@ -182,7 +186,7 @@ public class GeneticMusicChoraleNew implements JMC {
 
     public void convertToMidi(Configuration cfg, ChoraleGene[] chorale) throws InvalidConfigurationException{
         Chromosome sampleChromosome = new Chromosome(cfg,chorale);
-        Write.midi(ConverterUtil.getChoraleScore(sampleChromosome), "startChorale.mid");
+        Write.midi(ConverterUtil.getChoraleScore(sampleChromosome), "YanhanAndHazelChorale.mid");
     }
 
     public ChoraleGene[] getFittestIndividual(ChoraleGene[][] population){
@@ -200,14 +204,17 @@ public class GeneticMusicChoraleNew implements JMC {
 
     public double getMaxFitness(ChoraleGene[][] population){
         double max = 0;
-        int maxindex = 0;
         for (int i = 0; i < populationSize; i++){
+            //System.out.println("avg"+calculateFitness(population[i]));
             if (calculateFitness(population[i])>max){
-                //System.out.println(GeneticMusicChoraleNew.calculateFitness(population[i]));
-                maxindex = i;
+
+
                 max = calculateFitness(population[i]);
+
             }
         }
+//        System.out.println(max);
+//        System.out.println("end");
         return max;
     }
 }

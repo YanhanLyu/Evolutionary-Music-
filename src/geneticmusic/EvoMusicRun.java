@@ -21,6 +21,10 @@ public class EvoMusicRun {
         int numGenerations = 200;
         int chromosomeSize = 8;
         int populationSize = 100;
+        double mutationRate = 0.001;
+        double crossoverRate = 0.1;
+        // selParam is for tournament selection
+        int selParam = 3;
 
 
         // ********************** create a random population **********************
@@ -41,18 +45,21 @@ public class EvoMusicRun {
                 melody[j] = currentGene;
             }
             pop[i] = melody;
+
         }
-        // genaration run
-        GeneticMusicChoraleNew evolve = new GeneticMusicChoraleNew();
+        GeneticMusicChoraleNew evolve = new GeneticMusicChoraleNew(populationSize,chromosomeSize
+                ,mutationRate, crossoverRate, selParam);
+        System.out.println("initial average fitness: "+evolve.calculateAveragFitness(pop));
+        // evolve generation
+        //GeneticMusicChoraleNew(populationSize, chromosomeSize, mutationRate, crossoverRate, selParam)
         for(int i = 0; i < numGenerations; i++) {
-
+            pop = evolve.tournamentSelection(pop,cfg);
             evolve.runGeneration(pop);
-            pop = evolve.tournamentSelection(pop, 5,cfg);
-            System.out.println("max: "+evolve.getMaxFitness(pop));
-            System.out.println("avg: "+evolve.calculateAveragFitness(pop));
+            evolve.getMaxFitness(pop);
+//            System.out.println("max: "+evolve.getMaxFitness(pop));
+//            System.out.println("avg: "+evolve.calculateAveragFitness(pop));
         }
+        System.out.println("final average fitness: "+evolve.calculateAveragFitness(pop));
         evolve.convertToMidi(cfg,evolve.getFittestIndividual(pop));
-
-
     }
 }
