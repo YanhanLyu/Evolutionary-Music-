@@ -82,8 +82,8 @@ public class GeneticMusicChoraleNew implements JMC {
         //     System.out.println("Tournament Size: " + tournamentk);
         //     System.out.println("Tournament p: " + tournamentp);
         // }
-        int populationSize = 2;
-        int chromosomeSize = 20;
+        int populationSize =200;
+        int chromosomeSize = 10;
         int numGenerations = 100;
         double mutationRate = 0.1;
         String selector = "tournament";
@@ -125,16 +125,14 @@ public class GeneticMusicChoraleNew implements JMC {
         //     System.out.println(population[i].toString());
         // }
 
+        // ********************** create a random population **********************
         Configuration cfg = new DefaultConfiguration();
-        // create a population
-        ChoraleGene[][] population = new ChoraleGene[chromosomeSize][populationSize];
-
+        ChoraleGene[][] population = new ChoraleGene[populationSize][chromosomeSize];
         for(int i = 0; i < population.length; i++) {
-            // a ChoraleGene is a set of Notes in the current tempo,
-            // so ChoraleGene[] is a melody
-            ChoraleGene[] gene = new ChoraleGene[chromosomeSize];
+            // ChoraleGene[] is a melody
+            ChoraleGene[] melody = new ChoraleGene[chromosomeSize];
             // fill the sample melody with individual chords
-            for (int j = 0; j < gene.length; j++) {
+            for (int j = 0; j < melody.length; j++) {
                 ChoraleGene currentGene = new ChoraleGene(cfg);
                 // fill the chord with individual Notes
                 for (int k = 0; k < 4; k++) {
@@ -142,98 +140,101 @@ public class GeneticMusicChoraleNew implements JMC {
                     currentGene.changeNote(note, j);
                 }
                 // add the generated chord to the melody
-                gene[j] = currentGene;
+                melody[j] = currentGene;
             }
-            population[i] = gene;
-        }
-        
-        for (int i = 0; i<populationSize; i++){
-            for (int j = 0; j < chromosomeSize; j++) {
-                gene[j] = new ChoraleGene(cfg);
-                //System.out.println(gene[j].toString());
-            }
-            Melody melody = new Melody(chromosomeSize,gene);
             population[i] = melody;
         }
 
+        //test population
+//        for(int i = 0; i < populationSize; i++) {
+//            for (int j = 0; j < chromosomeSize; j++) {
+//                System.out.println(population[i][j].toString());
+//            }
+//            //population[i] = gene;
+//        }
+
+
+        
+//        for (int i = 0; i<populationSize; i++){
+//            for (int j = 0; j < chromosomeSize; j++) {
+//                gene[j] = new ChoraleGene(cfg);
+//                //System.out.println(gene[j].toString());
+//            }
+//            Melody melody = new Melody(chromosomeSize,gene);
+//            population[i] = melody;
+//        }
+
         GeneticOperators geneticOperator = new GeneticOperators();
+
         //mutate here
+         for (int i = 0; i<populationSize; i++){
+             // create a new melody
+             ChoraleGene[] newGenes = new ChoraleGene[chromosomeSize];
+             for (int j = 0; j < newGenes.length; j++) {
+                 // get and mutate the current chord
+                 ChoraleGene choraleGene = population[i][j];
+                 ChoraleGene newGene = geneticOperator.mutate(choraleGene, mutationRate);
+                 //System.out.println("newGene"+newGene);
+                 newGenes[j] = newGene;
+             }
+             //System.out.println("a melody"+ newGenes.toString());
+             //test if mutate right
+//             for (int j = 0; j < chromosomeSize; j++){
+//                 System.out.println("test gene"+ newGenes[j]);
+//             }
+             population[i] = newGenes;
+         }
 
-        // for (int i = 0; i<populationSize; i++){
-        //     //ChoraleGene[] geneArray = population[i].getGene();
-        //     ChoraleGene[] geneArray = population[i].getGene();
-        //     System.out.println(geneArray[0]);
-        //     // System.out.println(geneArray.toString());
-        //     // System.out.println(OurChorale.calculateFitness(population[i]));
-        //     for (int j = 0; j < chromosomeSize; j++) {
-        //         // ChoraleGene c = geneArray[j];
-        //         // //System.out.println("!!!!!!!!!"+c.toString());
-        //         // ChoraleGene newGene = geneticOperator.mutate(c, mutationRate);
-        //         // geneArray[j] = newGene;
-        //         System.out.println(geneArray[j]);
-        //     }
-        //     // Melody melody = new Melody(chromosomeSize,geneArray);
-        //     // population[i] = melody;
-        // }
+         //crossover
+         for (int i = 0; i<populationSize; i++){
+             ChoraleGene[] newGenes = new ChoraleGene[chromosomeSize];
+             for (int j = 0; j < chromosomeSize; j= j+2) {
+                 if (i < chromosomeSize-1) {
+                     ChoraleGene choraleGene1 = population[i][j];
+                     ChoraleGene choraleGene2 = population[i][j+1];
+                     //System.out.println("ChoraleGene1"+choraleGene1.toString());
+                     //System.out.println("ChoraleGene2"+choraleGene2.toString());
+                     ChoraleGene newGene[] = geneticOperator.crossover(choraleGene1, choraleGene2);
+                     //System.out.println("new ChoraleGene1"+newGene[0].toString());
+                     //System.out.println("new ChoraleGene2"+newGene[1].toString());
 
-        // crossover
-        // for (int i = 0; i<populationSize; i++){
-        //     ChoraleGene[] geneArray = population[i].getGene();
-        //     for (int j = 0; j < chromosomeSize; j= j+2) {
-        //         if (i < chromosomeSize-1) {
-        //             ChoraleGene c1 = geneArray[j];
-        //             ChoraleGene c2 = geneArray[j + 1];
-        //             ChoraleGene newGene[] = geneticOperator.crossover(c1, c2);
-        //             geneArray[j] = newGene[0];
-        //             geneArray[j + 1] = newGene[1];
-        //         }
-        //     }
-        //     Melody melody = new Melody(chromosomeSize,geneArray);
-        //     population[i] = melody;
-        // }
-        // Melody[] newPopulation = new Melody[populationSize];
-        // for (int i = 0 ; i < populationSize; i ++){
-        //     int fittestIndividual = GeneticMusicChoraleNew.findFittest(tournamentk, populationSize,population);
-        //     newPopulation[i] = population[fittestIndividual];
-        // }
+                     newGenes[j] = newGene[0];
+                     newGenes[j+1] = newGene[1];
+                 }
+             }
+             population[i] = newGenes;
+         }
 
         //fitness sharing here
-
-
+        ChoraleGene[][] newPopulation = new ChoraleGene[chromosomeSize][populationSize];
         //implement tournament selection here
-
-
-        // test if I'm right
-        for (int i = 0; i<populationSize; i++){
-            ChoraleGene[] printGene = population[i].getGene();
-            //System.out.println(OurChorale.calculateFitness(population[i]));
-            for (int j = 0; j < chromosomeSize; j++) {
-                System.out.println("round: "+j);
-                System.out.println("bass"+printGene[j].getBass().getPitch());
-                System.out.println("alto"+printGene[j].getAlto().getPitch());
-                System.out.println("soprano"+printGene[j].getSoprano().getPitch());
-                System.out.println("tenor"+printGene[j].getTenor().getPitch()+"\n");
-            }
-        }
+         for (int i = 0 ; i < populationSize; i ++){
+             int fittestIndividual = GeneticMusicChoraleNew.findFittest(200, populationSize,population);
+             newPopulation[i] = population[fittestIndividual];
+             //test population
+//             for (int j = 0; j < chromosomeSize; j++){
+//                 System.out.println("newPopulation");
+//                 System.out.println(population[i][j].toString());
+//             }
+         }
     }
 
-    public static int findFittest(int k, int populationSize, Melody[] population){
+    public static int findFittest(int k, int populationSize, ChoraleGene[][] population){
         int max = 0;
         Random rand = new Random();
         int maxindex = 0;
         for (int i = 0; i < k; i++){
-            int index = rand.nextInt(populationSize)+1;
-            Melody melody = population[i];
-            if (GeneticMusicChoraleNew.calculateFitness(melody)>max){
-                System.out.println(GeneticMusicChoraleNew.calculateFitness(melody));
+            int index = rand.nextInt(populationSize);
+            if (GeneticMusicChoraleNew.calculateFitness(population[index])>max){
+                System.out.println(GeneticMusicChoraleNew.calculateFitness(population[i]));
                 maxindex = index;
             }
         }
         return maxindex;
     }
 
-    public static double calculateFitness(Melody melody){
+    public static double calculateFitness(ChoraleGene[] choraleGene){
         OurMediumVoiceContinuityRule mvc = new OurMediumVoiceContinuityRule(0.2);
-        return mvc.evaluation(melody.getGene());
+        return mvc.evaluation(choraleGene);
     }
 }
