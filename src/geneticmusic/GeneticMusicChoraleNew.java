@@ -7,6 +7,8 @@ import geneticmusic.choraleRules.*;
 //import geneticmusic.jmusic.bridge.ConverterUtil;
 //import geneticmusic.domain.*;
 //import javax.swing.JFrame;
+import geneticmusic.genes.Note;
+import geneticmusic.genes.NoteGenerator;
 import jm.JMC;
 //import jm.util.Write;
 //import org.jfree.chart.ChartFactory;
@@ -122,9 +124,29 @@ public class GeneticMusicChoraleNew implements JMC {
         //     population[i] = new ChoraleGene(cfg);
         //     System.out.println(population[i].toString());
         // }
+
         Configuration cfg = new DefaultConfiguration();
-        ChoraleGene[] gene = new ChoraleGene[chromosomeSize];
-        Melody[] population = new Melody[populationSize];
+        // create a population
+        ChoraleGene[][] population = new ChoraleGene[chromosomeSize][populationSize];
+
+        for(int i = 0; i < population.length; i++) {
+            // a ChoraleGene is a set of Notes in the current tempo,
+            // so ChoraleGene[] is a melody
+            ChoraleGene[] gene = new ChoraleGene[chromosomeSize];
+            // fill the sample melody with individual chords
+            for (int j = 0; j < gene.length; j++) {
+                ChoraleGene currentGene = new ChoraleGene(cfg);
+                // fill the chord with individual Notes
+                for (int k = 0; k < 4; k++) {
+                    Note note = new NoteGenerator().nextNote();
+                    currentGene.changeNote(note, j);
+                }
+                // add the generated chord to the melody
+                gene[j] = currentGene;
+            }
+            population[i] = gene;
+        }
+        
         for (int i = 0; i<populationSize; i++){
             for (int j = 0; j < chromosomeSize; j++) {
                 gene[j] = new ChoraleGene(cfg);

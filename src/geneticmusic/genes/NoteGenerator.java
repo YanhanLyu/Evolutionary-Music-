@@ -8,6 +8,8 @@ import geneticmusic.genes.Pitch;
 import geneticmusic.genes.Alteration;
 import geneticmusic.genes.Note;
 import java.util.Random;
+
+import org.jetbrains.annotations.NotNull;
 import org.jgap.RandomGenerator;
 
 /**
@@ -23,7 +25,8 @@ public class NoteGenerator implements RandomGenerator{
     /**
      * @return a new random Note
      */
-    public Note nextNote(){
+    @NotNull
+    public static Note nextNote(){
         return new Note(
                 getRandomPitch(), 
                 getRandomOctave(3,5), 
@@ -38,7 +41,7 @@ public class NoteGenerator implements RandomGenerator{
      * @param maxRithm
      * @return a random Note generated within the allowed octave and rhythm ranges
      */
-    public Note nextNote(int minOctave, int maxOctave, int minRithm, int maxRithm){
+    public static Note nextNote(int minOctave, int maxOctave, int minRithm, int maxRithm){
          return getRandomNote(minOctave, maxOctave, minRithm, maxRithm);
     }
 
